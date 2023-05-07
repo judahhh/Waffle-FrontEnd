@@ -286,14 +286,14 @@ const InDM = (props) => {
     // );
     navigate(`/openvidu/${dm_id}`);
   };
-  const moveToVideoChat2 = () => {
-    // window.open(
-    //   `${process.env.REACT_APP_SERVER_URL}/openvidu2/${dm_id}`,
-    //   "_blank",
-    //   "noreferrer"
-    // );
-    navigate(`/openvidu2/${dm_id}`);
-  };
+  // const moveToVideoChat2 = () => {
+  // window.open(
+  //   `${process.env.REACT_APP_SERVER_URL}/openvidu2/${dm_id}`,
+  //   "_blank",
+  //   "noreferrer"
+  // );
+  //   navigate(`/openvidu2/${dm_id}`);
+  // };
   const messageListRef = useRef(null);
   useEffect(() => {
     // messageListRef.current.scrollTo(0, messageListRef.current.scrollHeight);
@@ -328,7 +328,7 @@ const InDM = (props) => {
             <p key={v.id}> &nbsp; {v.name} | </p>
           ))}
           <ButtonInDM onClick={moveToVideoChat}>1</ButtonInDM>
-          <ButtonInDM onClick={moveToVideoChat2}>2</ButtonInDM>
+          {/* <ButtonInDM onClick={moveToVideoChat2}>2</ButtonInDM> */}
         </DMChatHeader>
 
         {/* messageList 뿌려주기 */}
