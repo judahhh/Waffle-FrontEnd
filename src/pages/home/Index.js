@@ -9,13 +9,13 @@ import Header from "../../components/header/Header";
 import SideBarAtHome from "../../components/sidebar/SidebarAtHome";
 
 const Index = () => {
+  const navigate = useNavigate();
   const user_email = localStorage.getItem("email");
-  console.log(user_email);
 
   useEffect(() => {
     let isLogined = localStorage.getItem("isLogined");
     console.log(isLogined);
-    // if (!isLogined) navigate("/login");
+    if (!isLogined) navigate("/login");
   }, []);
 
   return (
