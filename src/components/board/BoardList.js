@@ -29,13 +29,13 @@ const BoardList = () => {
   //     notes: [{ id: "2", title: "게시판글1", content: "게시내용", date: "" }],
   //   };
   const [boardList, setBoardList] = useState();
-  const { type, type_id } = useTypeStore();
+  let { type, type_id } = useTypeStore();
   const { storeGroups, setStoreGroups, setGroupId, group_id, group_name } =
     useGroupsStore();
   const { storeRooms, setStoreRooms, setRoomId, room_id, room_name } =
     useRoomsStore();
 
-  const { board_id } = useParams();
+  // const { board_id } = useParams();
   const navigate = useNavigate();
   if (type === "group") type_id = group_id;
   else type_id = room_id;

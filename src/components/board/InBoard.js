@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { api } from "../../api/Interceptors";
 
@@ -55,20 +55,37 @@ const ButtonInBoard = styled.button`
 `;
 
 const InBoard = ({ board_id }) => {
+  const [boardDetail, setBoardDetail] = useState();
   useEffect(() => {
     api
-      .get("")
+      .get(`/note/${board_id}`)
       .then((response) => {
         console.log(response);
+        setBoardDetail(response.data);
       })
       .catch((err) => console.log(err));
   }, []);
+  const remove = () => {
+    if (window.confirm("글을 삭제하시겠습니까?")) {
+      api
+        .delete(`/note/${board_id}/delete`)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
   return (
     <StyleDMWrapper>
       <StyleBox>
         <BoardHeader>
-          <ButtonInBoard>-</ButtonInBoard>
+          <ButtonInBoard onClick={remove}>-</ButtonInBoard>
         </BoardHeader>
+        <h2>{boardDetail.title}</h2>
+        <p>{boardDetail.writer}</p>
+        <p>{boardDetail.content}</p>
+        <p>{boardDetail.date}</p>
       </StyleBox>
     </StyleDMWrapper>
   );
