@@ -26,7 +26,7 @@ const style = {
 const Wrapper = styled.div`
   text-align: center;
 `;
-const Button = styled.button`
+export const Button = styled.button`
   width: 30px;
   height: 30px;
   color: white;
@@ -91,14 +91,14 @@ const ModalDmCreate = () => {
   return (
     <div>
       <Wrapper>
-        <TextField
+        {/* <TextField
           id="standard-search"
           label="Search field"
           type="search"
           variant="standard"
           size="small"
-        />
-        <Button onClick={handleOpen}>+{/* <AddIcon /> */}</Button>
+        /> */}
+        <Button onClick={handleOpen}>+</Button>
       </Wrapper>
 
       <Modal

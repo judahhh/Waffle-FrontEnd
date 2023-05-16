@@ -53,7 +53,8 @@ const ModalDmInvite = (props) => {
       .post(`/chat/${dm_id}/invite`, { email: inviteEmail })
       .then((response) => {
         console.log(response);
-        navigate("/chat");
+        handleClose();
+        //navigate("/chat");
       })
       .catch((err) => console.log(err));
   };

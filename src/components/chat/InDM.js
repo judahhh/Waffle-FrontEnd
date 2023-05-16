@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import * as StompJs from "@stomp/stompjs";
 
-import { Grid } from "@mui/material";
+import { Grid, Box, Card, CardContent, Typography } from "@mui/material";
 
 import { api } from "../../api/Interceptors";
 import ModalDmInvite from "./ModalDmInvite";
@@ -72,7 +72,7 @@ const MyInput = styled.input`
 const Wrapper = styled.div`
   text-align: center;
 `;
-const ButtonInDM = styled.button`
+export const ButtonInDM = styled.button`
   width: 30px;
   height: 30px;
   color: #f2c8a1;
@@ -153,7 +153,7 @@ const InDM = (props) => {
         setMessageList(response.data.messages);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [dm_id]);
 
   //InviteFriendToDM 함수 채팅방 초대 모달 만들어서 거기 생성 부분에 옮기기
   // const InviteFriendToDM = () => {
@@ -193,16 +193,7 @@ const InDM = (props) => {
         refresh_token: localStorage.getItem("jwt_refreshToken"),
       },
     });
-    // client.current.connect({}, () => {
-    //   //subscribe()
-    //   console.log("소켓연결");
-    //   client.current.subscribe(`/sub/chat/${dm_id}`, (response) => {
-    //     console.log(response);
-    //     const json_body = JSON.parse(response.body);
-    //     setMessageList((_chat_list) => [..._chat_list, json_body]);
-    //     console.log(json_body);
-    //   });
-    // });
+
     client.current.activate();
   };
 
@@ -227,23 +218,14 @@ const InDM = (props) => {
 
   const send = (message) => {
     if (!client.current.connected) return; //연결되지 않았으면 메시지를 보내지 않는다.
-    // client.current.send(
-    //   "/pub/chat",
-    //   {},
-    //   JSON.stringify({
-    //     dm_id: dm_id,
-    //     content: chat,
-    //     sender: localStorage.getItem("email"),
-    //   })
-    // );
-    console.log("나 메시지 보낸다");
+
     client.current.publish({
       destination: "/pub/chat",
       body: JSON.stringify({
         dmId: dm_id,
         content: message,
         user_email: localStorage.getItem("email"),
-      }), // 형식에 맞게 수정해서 보내야 함.
+      }),
       headers: {
         access_token: localStorage.getItem("jwt_accessToken"),
         refresh_token: localStorage.getItem("jwt_refreshToken"),
@@ -253,13 +235,6 @@ const InDM = (props) => {
     console.log("메시지 보냈다");
     setMessage(""); //전송하고 나면 인풋값 비워주기
   };
-
-  // const subscribe = () => {
-  //   client.current.subscribe("/sub/chat/" + dm_id, (body) => {
-  //     const json_body = JSON.parse(body.body);
-  //     setChatList((_chat_list) => [..._chat_list, json_body]);
-  //   });
-  // };
 
   const disconnect = () => {
     client.current.deactivate();
@@ -275,7 +250,6 @@ const InDM = (props) => {
     // 보내기 버튼 눌렀을 때 publish
     e.preventDefault();
     send(message);
-    setMessage(message);
   };
 
   const moveToVideoChat = () => {
@@ -286,19 +260,24 @@ const InDM = (props) => {
     // );
     navigate(`/openvidu/${dm_id}`);
   };
-  // const moveToVideoChat2 = () => {
-  // window.open(
-  //   `${process.env.REACT_APP_SERVER_URL}/openvidu2/${dm_id}`,
-  //   "_blank",
-  //   "noreferrer"
-  // );
-  //   navigate(`/openvidu2/${dm_id}`);
-  // };
-  const messageListRef = useRef(null);
+  const moveToVideoChat2 = () => {
+    // window.open(
+    //   `${process.env.REACT_APP_SERVER_URL}/openvidu2/${dm_id}`,
+    //   "_blank",
+    //   "noreferrer"
+    // );
+    navigate(`/openvidu2/${dm_id}`);
+  };
+  const messageListRef = useRef();
+  const scrollToBottom = () => {
+    if (messageListRef.current) {
+      messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
+    }
+  };
   useEffect(() => {
+    scrollToBottom();
     // messageListRef.current.scrollTo(0, messageListRef.current.scrollHeight);
     // messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
-    console.log("메시지 보내면(메시지 리스트 바뀌면) 아래로 자동 스크롤!");
   }, [messageList]);
 
   useEffect(() => {
@@ -306,6 +285,7 @@ const InDM = (props) => {
 
     return () => disconnect();
   }, [dm_id]);
+  useEffect(() => {}, [peopleIncluded]);
 
   if (!peopleIncluded) {
     return <div></div>;
@@ -313,26 +293,31 @@ const InDM = (props) => {
 
   return (
     <StyleDMWrapper resize={resize}>
-      {/* <div>{messageList}</div> */}
       <StyleBox resize={resize} ref={messageListRef}>
         <DMChatHeader resize={resize}>
           {/* <ButtonInDM onClick={InviteFriendToDM}>
             +
           </ButtonInDM> */}
-          <ButtonInDM onClick={LeaveDM}>-{/* <AddIcon /> */}</ButtonInDM>
+          <ButtonInDM onClick={LeaveDM}>-</ButtonInDM>
           <ModalDmInvite dm_id={dm_id} />
 
           <h3 style={{ margin: "10px" }}>{dmName}</h3>
-          {/* 여기에 peopleIncluded */}
+
           {peopleIncluded.map((v, i) => (
             <p key={v.id}> &nbsp; {v.name} | </p>
           ))}
           <ButtonInDM onClick={moveToVideoChat}>1</ButtonInDM>
-          {/* <ButtonInDM onClick={moveToVideoChat2}>2</ButtonInDM> */}
+          <ButtonInDM onClick={moveToVideoChat2}>2</ButtonInDM>
         </DMChatHeader>
 
         {/* messageList 뿌려주기 */}
         {messageList.map((v, i) => {
+          if (
+            i !== messageList.length - 1 &&
+            messageList[i].time.slice(9) !== messageList[i + 1].time.slice(9)
+          ) {
+            let displayDate = true;
+          }
           return (
             <Grid
               key={v.id}
@@ -344,19 +329,20 @@ const InDM = (props) => {
                   : "flex-start"
               }
             >
-              {/* <SpeechBubble key={v.content}> */}
-              <h4 style={{ backgroundColor: "#f5b66c", borderRadius: "5px" }}>
-                &nbsp;&nbsp;{v.user_name}&nbsp;&nbsp;&nbsp;
-              </h4>
-
-              {/* </SpeechBubble> */}
-              <h5 style={{ color: "grey" }}>
-                {v.content}&nbsp;&nbsp;&nbsp;&nbsp;
-              </h5>
-              {/* {v.time} */}
+              <DmMiniBox
+                user_name={v.user_name}
+                user_email={v.user_email}
+                time={v.time.slice(11, 16)}
+                content={v.content}
+              />
             </Grid>
+
+            // {  displayDate?(
+            //     <p>{messageList[i + 1].time.slice(9)}</p>
+            //   ):("")}
           );
         })}
+        <div ref={messageListRef}></div>
       </StyleBox>
 
       {/* <StyleForm> */}

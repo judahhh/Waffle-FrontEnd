@@ -1,17 +1,27 @@
 import React from "react";
+import styled from "styled-components";
 
 import { Box, Card, CardContent, Typography } from "@mui/material";
 
-const DmMiniBox = ({ isUser, message }) => {
-  const color = isUser ? "#87CEFA" : "#e5e5e5";
+const MessageBox = styled(Card)`
+  height: 40px;
+`;
+
+const DmMiniBox = ({ user_name, user_email, time, content }) => {
+  //#f5b66c
+  let isUser = localStorage.getItem("email") === user_email;
+  const color = isUser ? "#f5b66c" : "white";
   return (
-    <Box padding={`10px`}>
-      {!isUser && <Typography>00님</Typography>}
-      <Card sx={{ backgroundColor: color }}>
+    <Box padding={`7px`}>
+      {user_email !== localStorage.getItem("email") && (
+        <p style={{ fontWeight: "bold", margin: "5px" }}>{user_name}</p>
+      )}
+      <MessageBox style={{ backgroundColor: color }}>
         <CardContent>
-          <Typography>{message}</Typography>
+          <Typography style={{ lineHeight: "10px" }}>{content}</Typography>
         </CardContent>
-      </Card>
+      </MessageBox>
+      <Typography>{time}</Typography>
     </Box>
   );
 };
