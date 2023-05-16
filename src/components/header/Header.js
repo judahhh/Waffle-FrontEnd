@@ -1,8 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { Toolbar, CssBaseline, AppBar } from "@mui/material";
+
+import {
+  useGroupsStore,
+  useHeaderMenuStore,
+  useTypeStore,
+} from "../../store/Store";
 
 export const MyToolbar = styled(Toolbar)`
   background-color: white;
@@ -31,10 +37,23 @@ export const MyTitle = styled.h1`
   cursor: pointer;
 `;
 const drawerWidth = 240;
+
 const Header = () => {
   const navigate = useNavigate();
+  const { type, type_id, type_name } = useTypeStore();
+  // const type_id = useParams();
+  const { setHeaderMenu, headerMenu } = useHeaderMenuStore();
+  const { storeGroups } = useGroupsStore();
+  const { storeRooms } = useGroupsStore();
   const moveChat = () => {
     navigate("/chat");
+  };
+  const movetoBoard = () => {
+    setHeaderMenu("board");
+    console.log(headerMenu);
+    navigate(`/${type}/${type_id}/board`, {
+      state: { type_name: type_name, groups: storeGroups, rooms: storeRooms },
+    });
   };
   return (
     <div>
@@ -45,11 +64,37 @@ const Header = () => {
         sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
       >
         <MyToolbar>
-          <HeaderBtn id="일정">일정</HeaderBtn>
-          <HeaderBtn id="프로필">프로필</HeaderBtn>
-          <HeaderBtn id="채팅" onClick={moveChat}>
-            채팅
-          </HeaderBtn>
+          {type === "home" ? (
+            <>
+              <HeaderBtn id="일정" onClick={() => navigate(`/`)}>
+                일정
+              </HeaderBtn>
+              <HeaderBtn id="프로필" onClick={() => navigate("/myprofile")}>
+                프로필
+              </HeaderBtn>
+              <HeaderBtn id="채팅" onClick={moveChat}>
+                채팅
+              </HeaderBtn>
+            </>
+          ) : (
+            <>
+              <HeaderBtn
+                id="일정"
+                onClick={() => navigate(`/${type}/${type_id}`)}
+              >
+                일정
+              </HeaderBtn>
+              <HeaderBtn id="게시판" onClick={() => movetoBoard()}>
+                게시판
+              </HeaderBtn>
+              <HeaderBtn id="프로필" onClick={() => navigate("/myprofile")}>
+                프로필
+              </HeaderBtn>
+              <HeaderBtn id="채팅" onClick={moveChat}>
+                채팅
+              </HeaderBtn>
+            </>
+          )}
         </MyToolbar>
       </AppBar>
     </div>
