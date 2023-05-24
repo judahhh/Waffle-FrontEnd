@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useLocation, useParams } from "react-router-dom";
 
@@ -15,35 +15,41 @@ const BoardPage = () => {
   // const { group_id } = useParams();
   // const { room_id } = useParams();
   // const group_name = location.state.group_name;
-  // const groups = location.state.groups;
+  //const groups = location.state.groups;
 
-  const { type } = useTypeStore();
+  const { type, setTypeGroup, setTypeRoom } = useTypeStore();
   const { storeGroups, setStoreGroups, setGroupId, group_id, group_name } =
     useGroupsStore();
   const { storeRooms, setStoreRooms, setRoomId, room_id, room_name } =
     useRoomsStore();
 
+  useEffect(() => {
+    console.log(storeGroups, type);
+    localStorage.getItem("type") == "group"
+      ? setTypeGroup(group_id)
+      : setTypeRoom(room_id);
+  }, []);
   return (
     <>
       <Box sx={{ display: "flex" }}>
         {type === "group" ? (
           <>
             <Header />
-            {/* <SideBarAtGroup 
-                  group_id={group_id}
-                  group_name={group_name}
-                  groups={storeGroups}
-            /> */}
+            <SideBarAtGroup
+              group_id={group_id}
+              group_name={group_name}
+              groups={storeGroups}
+            />
           </>
         ) : (
           <>
             <Header />
-            {/* <SideBarAtRoom 
-                 room_name={room_name}
-                 rooms={storeRooms}
-                 group_id={group_id}
-                 groups={storeGroups}
-            /> */}
+            <SideBarAtRoom
+              room_name={room_name}
+              rooms={storeRooms}
+              group_id={group_id}
+              groups={storeGroups}
+            />
           </>
         )}
         <Box
