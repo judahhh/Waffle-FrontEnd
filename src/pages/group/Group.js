@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { Box, Toolbar } from "@mui/material";
 
@@ -16,7 +17,10 @@ const Group = () => {
   const groups = location.state.groups;
   const { headerMenu } = useHeaderMenuStore();
   const { setTypeGroup } = useTypeStore();
-  setTypeGroup(group_id);
+  console.log(headerMenu);
+  useEffect(() => {
+    setTypeGroup(group_id);
+  }, []);
 
   return (
     <div>
@@ -33,7 +37,7 @@ const Group = () => {
           sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
         >
           <Toolbar />
-          {headerMenu === "plan" ? (
+          {/* {headerMenu === "plan" ? (
             <Calendar
               type="group"
               type_id={group_id}
@@ -42,7 +46,13 @@ const Group = () => {
             />
           ) : (
             <BoardList />
-          )}
+          )} */}
+          <Calendar
+            type="group"
+            type_id={group_id}
+            groups={groups}
+            group_name={group_name}
+          />
         </Box>
       </Box>
     </div>
