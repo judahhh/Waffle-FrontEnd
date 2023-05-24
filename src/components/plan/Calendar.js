@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -10,43 +11,59 @@ import ModalPlan from "./ModalPlan";
 import Board from "./Board";
 import { useCalenderStore } from "../../store/Store";
 
+const Button = styled.button`
+  width: 80px;
+  height: 30px;
+  border: none;
+  color: grey;
+  background-color: antiquewhite;
+  :hover {
+    cursor: pointer;
+  }
+  font-weight: bold;
+  &.selected {
+    background-color: #f5b66c;
+    color: black;
+  }
+`;
+
 const Calendar = (props) => {
   const navigate = useNavigate();
-  // const [planList, setPlanList] = useState([]);
+  const [planList, setPlanList] = useState([]);
   const [selectBoard, setSelectBoard] = useState(false);
   const { isBoard, setBoardState, setCalendarState } = useCalenderStore();
   let groups, group_name;
   let event;
   if (props.groups !== undefined) groups = props.groups;
   if (props.group_name !== undefined) group_name = props.group_name;
-  const planList = [
-    {
-      plan_id: 3,
-      title: "공부하기",
-      start: "2023-05-13",
-      end: "2023-05-14",
-      extendedProps: {
-        department: "",
-      },
-      color: "#f5b66c",
-      allDay: true,
-      content: "react",
-      state: "미완료",
-    },
-    {
-      plan_id: 4,
-      title: "회의",
-      start: "2023-05-13",
-      end: "2023-05-14",
-      extendedProps: {
-        department: "",
-      },
-      color: "#f5b66c",
-      allDay: true,
-      content: "",
-      state: "진행중",
-    },
-  ];
+  // const planList = [
+  //   {
+  //     plan_id: 3,
+  //     title: "공부하기",
+  //     start: "2023-05-13",
+  //     end: "2023-05-14",
+  //     extendedProps: {
+  //       department: "",
+  //     },
+  //     color: "#f5b66c",
+  //     allDay: true,
+  //     content: "react",
+  //     state: "미완료",
+  //   },
+  //   {
+  //     plan_id: 4,
+  //     title: "회의",
+  //     start: "2023-05-13",
+  //     end: "2023-05-14",
+  //     extendedProps: {
+  //       department: "",
+  //     },
+  //     color: "#f5b66c",
+  //     allDay: true,
+  //     content: "",
+  //     state: "진행중",
+  //   },
+  // ];
 
   const handleDateClick = (e) => {
     event = {
@@ -80,7 +97,7 @@ const Calendar = (props) => {
       .then((response) => {
         //여기서 캘린더에 보여줄 planList 세팅하기
         console.log(response);
-        // setPlanList(response.data.plans);
+        setPlanList(response.data.plans);
       })
       .catch((err) => console.log(err));
   };
@@ -89,10 +106,32 @@ const Calendar = (props) => {
   }, []);
 
   return (
-    <div>
+    <>
       <ModalPlan type={props.type} type_id={props.type_id} />
-      <button onClick={() => setBoardState(true)}>보드로 보기</button>
-      <button onClick={() => setCalendarState(true)}>캘린더로 보기</button>
+      <div
+        style={{
+          textAlign: "center",
+          alignItems: "center",
+        }}
+      >
+        <Button
+          style={{
+            borderRadius: "5px 0 0 5px",
+            display: "inline-block",
+          }}
+          onClick={() => setBoardState(true)}
+          className={isBoard ? "selected" : ""}
+        >
+          Board
+        </Button>
+        <Button
+          style={{ borderRadius: " 0 5px 5px 0" }}
+          onClick={() => setCalendarState(true)}
+          className={isBoard ? "" : "selected"}
+        >
+          Calendar
+        </Button>
+      </div>
       {isBoard ? (
         <Board planList={planList} />
       ) : (
@@ -106,7 +145,7 @@ const Calendar = (props) => {
           eventClick={handleDateClick}
         />
       )}
-    </div>
+    </>
   );
 };
 

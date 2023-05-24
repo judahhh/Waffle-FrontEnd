@@ -3,45 +3,73 @@ import { useState } from "react";
 import styled from "styled-components";
 
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import { Checkbox, Modal } from "@mui/material";
+import { Modal } from "@mui/material";
 
 import { api } from "../../api/Interceptors";
 import { Button } from "../chat/ModalDmCreate";
+import { InputTextInModal } from "../commons/InputInModal";
+import { BtnInModal } from "../commons/BtnInModal";
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
-  height: 300,
+  width: 600,
+  height: 400,
   bgcolor: "background.paper",
   boxShadow: 24,
   borderRadius: 3,
   p: 4,
 };
+export const StyleSelect = styled.select`
+  margin: 5px;
+  width: 60px;
+  height: 30px;
+  font-size: 15px;
+  border: 1px dotted grey;
+  border-radius: 5px;
+  :focus {
+    outline: none;
+    border: 1px solid orange;
+  }
+`;
+
+export const StyleRadio = styled.input.attrs({ type: "radio" })`
+  accent-color: saddlebrown;
+`;
+export const StyleLabel = styled.label`
+  cursor: pointer;
+  margin: 10px;
+`;
 
 const ModalPlan = (props) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [selectStartYear, setSelectStartyear] = useState("2023");
-  const [selectStartMonth, setSelectStartMonth] = useState("");
-  const [selectStartDay, setSelectStartDay] = useState("");
+  let today = new Date();
+  let yearToday = today.getFullYear();
+  let monthToday = ("0" + (today.getMonth() + 1)).slice(-2);
+  let dayToday = ("0" + today.getDate()).slice(-2);
 
-  const [selectEndYear, setSelectEndyear] = useState("2023");
-  const [selectEndMonth, setSelectEndMonth] = useState("");
-  const [selectEndDay, setSelectEndDay] = useState("");
+  const [selectStartYear, setSelectStartyear] = useState(yearToday);
+  const [selectStartMonth, setSelectStartMonth] = useState(monthToday);
+  const [selectStartDay, setSelectStartDay] = useState(dayToday);
+
+  const [selectEndYear, setSelectEndyear] = useState(yearToday);
+  const [selectEndMonth, setSelectEndMonth] = useState(monthToday);
+  const [selectEndDay, setSelectEndDay] = useState(dayToday);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [state, setState] = useState("");
+  const stateArr = ["미완료", "완료", "진행중"];
   const [form, setForm] = useState({
     year: 2023,
     month: "01",
     day: "01",
   });
+
   const now = new Date();
 
   let years = [];
@@ -77,8 +105,9 @@ const ModalPlan = (props) => {
       title: title,
       content: content,
       start: `${selectStartYear}-${selectStartMonth}-${selectStartDay}`,
-      end: `${selectEndYear}-${selectEndMonth}-${selectEndDay}`,
-      state: "미완료",
+      end: `${selectEndYear}-${selectEndMonth}-${selectEndDay}T16:00:00`,
+      state: state,
+      //color: "#f5b66c",
     };
     console.log(body);
     await api
@@ -90,7 +119,9 @@ const ModalPlan = (props) => {
       })
       .catch((err) => console.log(err));
   };
-
+  const handleRadioBtn = (e) => {
+    setState(e.target.value);
+  };
   return (
     <>
       <Button onClick={handleOpen}>+</Button>{" "}
@@ -102,9 +133,10 @@ const ModalPlan = (props) => {
       >
         <Box sx={style} onSubmit={createPlan}>
           <form style={{ textAlign: "center" }}>
+            <h2 style={{ margin: 10 }}>일정 생성</h2>
             <div>
               <label>시작 날짜 : </label>
-              <select
+              <StyleSelect
                 onChange={(e) => {
                   setSelectStartyear(e.target.value);
                 }}
@@ -115,8 +147,8 @@ const ModalPlan = (props) => {
                     {item}
                   </option>
                 ))}
-              </select>
-              <select
+              </StyleSelect>
+              <StyleSelect
                 onChange={(e) => {
                   setSelectStartMonth(e.target.value);
                 }}
@@ -127,8 +159,8 @@ const ModalPlan = (props) => {
                     {item}
                   </option>
                 ))}
-              </select>
-              <select
+              </StyleSelect>
+              <StyleSelect
                 onChange={(e) => {
                   setSelectStartDay(e.target.value);
                 }}
@@ -139,11 +171,11 @@ const ModalPlan = (props) => {
                     {item}
                   </option>
                 ))}
-              </select>
+              </StyleSelect>
             </div>
             <div>
               <label>종료 날짜 : </label>
-              <select
+              <StyleSelect
                 onChange={(e) => {
                   setSelectEndyear(e.target.value);
                 }}
@@ -154,8 +186,8 @@ const ModalPlan = (props) => {
                     {item}
                   </option>
                 ))}
-              </select>
-              <select
+              </StyleSelect>
+              <StyleSelect
                 onChange={(e) => {
                   setSelectEndMonth(e.target.value);
                 }}
@@ -166,8 +198,8 @@ const ModalPlan = (props) => {
                     {item}
                   </option>
                 ))}
-              </select>
-              <select
+              </StyleSelect>
+              <StyleSelect
                 onChange={(e) => {
                   setSelectEndDay(e.target.value);
                 }}
@@ -178,11 +210,11 @@ const ModalPlan = (props) => {
                     {item}
                   </option>
                 ))}
-              </select>
+              </StyleSelect>
             </div>
             <div>
               <label>일정 : </label>
-              <input
+              <InputTextInModal
                 type="text"
                 display="block"
                 value={title}
@@ -192,9 +224,9 @@ const ModalPlan = (props) => {
               />
             </div>
 
-            <div>
+            <div style={{ marginBottom: 10 }}>
               <label>내용 : </label>
-              <input
+              <InputTextInModal
                 type="text"
                 display="block"
                 value={content}
@@ -203,26 +235,25 @@ const ModalPlan = (props) => {
                 }}
               />
             </div>
+            <StyleLabel>
+              {stateArr.map((v, i) => {
+                return (
+                  <StyleLabel>
+                    {v}
+                    <StyleRadio
+                      type="radio"
+                      value={v}
+                      key={v}
+                      checked={state === v}
+                      onChange={handleRadioBtn}
+                    />
+                  </StyleLabel>
+                );
+              })}
+            </StyleLabel>
             <div>
-              {/* <label>상태 : </label> */}
-              <div>
-                {" "}
-                완료
-                <input type="radio" value="완료" />
-              </div>
-              <div>
-                {" "}
-                미완료
-                <input type="radio" value="미완료" />
-              </div>
-              <div>
-                {" "}
-                진행중
-                <input type="radio" value="진행중" />
-              </div>
+              <BtnInModal type="submit" value="생성" />
             </div>
-
-            <button type="submit">일정 생성</button>
           </form>
         </Box>
       </Modal>
