@@ -11,7 +11,7 @@ import { useGroupsStore } from "../../store/Store";
 import { useRoomsStore } from "../../store/Store";
 import { BtnInModal } from "../commons/BtnInModal";
 import { InputTextInModal, InputCheckInModal } from "../commons/InputInModal";
-
+import { StyleTextArea } from "../../components/profile/MyData";
 const style = {
   position: "absolute",
   top: "50%",
@@ -103,7 +103,7 @@ const ModalBoardCreate = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} onSubmit={createBoard}>
-          <h2>게시글 생성</h2>
+          <h2 style={{ textAlign: "center" }}>게시글 생성</h2>
           <form>
             <div>
               게시글 제목 :
@@ -115,21 +115,24 @@ const ModalBoardCreate = () => {
             </div>
             <div>
               <div>게시글 내용:</div>
-              <textarea
+              <StyleTextArea
                 name="content"
-                cols="50"
+                cols="68"
                 rows="10"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-              ></textarea>
+                style={{ borderColor: "grey" }}
+              ></StyleTextArea>
             </div>
-            공지글인가요?
-            <InputCheckInModal
-              type="checkbox"
-              value={noticeOrNot}
-              onClick={() => setNoticeOrNot(!noticeOrNot)}
-            />
-            <div>
+            <div style={{ textAlign: "center" }}>
+              공지글인가요?
+              <InputCheckInModal
+                type="checkbox"
+                value={noticeOrNot}
+                onClick={() => setNoticeOrNot(!noticeOrNot)}
+              />
+            </div>
+            <div style={{ textAlign: "center" }}>
               <BtnInModal value="생성하기" />
             </div>
           </form>

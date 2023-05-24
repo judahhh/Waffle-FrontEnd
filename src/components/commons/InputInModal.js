@@ -13,8 +13,7 @@ export const InputTextInModal = styled.input.attrs({ type: "text" })`
   margin: 5px;
 `;
 export const InputCheckInModal = styled.input.attrs({ type: "checkbox" })`
-  :focus {
-    border-color: orange;
-    color: grey;
-  }
+  margin: 10px;
+  accent-color: orange;
+  zoom: 1.5;
 `;
