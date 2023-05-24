@@ -8,6 +8,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 
 import ModalInviteRoom from "../modal/ModalInviteRoom";
 import { api } from "../../api/Interceptors";
@@ -17,6 +18,7 @@ import {
   useRoomsStore,
   useTypeStore,
 } from "../../store/Store";
+import { StyleMySpace } from "./SidebarAtHome";
 
 export const MyTitle = styled.h1`
   margin: 0;
@@ -33,6 +35,19 @@ const MyListItem = styled(ListItem)`
   }
   &.selected {
     background-color: rgba(245, 182, 108, 0.2);
+  }
+`;
+const MyList = styled(List)`
+  &.show {
+    transition: opacity 0.2s linear;
+    transform: translate(0);
+    opacity: 1;
+    z-index: 1;
+  }
+  &.hide {
+    transition: all 0.2s linear;
+    transform: translateY(-9999px);
+    opacity: 0;
   }
 `;
 const DeleteBtn = styled.div`
@@ -69,6 +84,7 @@ const LogoutBtn = styled.button`
 const drawerWidth = 240;
 
 const SidebarAtRoom = (props) => {
+  const [IsOpen, setIsOpen] = useState(false);
   const { setTypeGroup, setTypeRoom } = useTypeStore();
   const { setStoreRooms, setRoomId } = useRoomsStore();
   const { setStoreGroups, setGroupId } = useGroupsStore();
@@ -169,9 +185,16 @@ const SidebarAtRoom = (props) => {
       >
         <MyTitle onClick={moveHome}>waffle</MyTitle>
         <Divider />
-        {/* <Myspace /> */}
-
-        <Divider />
+        <StyleMySpace onClick={() => setIsOpen(!IsOpen)}>
+          <span>{room_name}</span>
+          <span style={{ margin: 10 }}>
+            {IsOpen ? (
+              <BsChevronUp></BsChevronUp>
+            ) : (
+              <BsChevronDown></BsChevronDown>
+            )}
+          </span>
+        </StyleMySpace>
 
         <List>
           {groups.map((v, index) => (

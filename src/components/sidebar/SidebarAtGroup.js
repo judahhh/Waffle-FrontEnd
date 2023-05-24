@@ -8,6 +8,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 
 import ModalInviteGroup from "../modal/ModalInviteGroup";
 import ModalRoom from "../modal/ModalRoom";
@@ -18,6 +19,7 @@ import {
   useRoomsStore,
   useTypeStore,
 } from "../../store/Store";
+import { StyleMySpace } from "./SidebarAtHome";
 
 export const MyTitle = styled.h1`
   margin: 0;
@@ -27,6 +29,19 @@ export const MyTitle = styled.h1`
 `;
 const BtnWrapper = styled.div`
   text-align: center;
+`;
+const MyList = styled(List)`
+  &.show {
+    transition: opacity 0.2s linear;
+    transform: translate(0);
+    opacity: 1;
+    z-index: 1;
+  }
+  &.hide {
+    transition: all 0.2s linear;
+    transform: translateY(-9999px);
+    opacity: 0;
+  }
 `;
 const MyListItem = styled(ListItem)`
   &:hover {
@@ -71,6 +86,7 @@ const LogoutBtn = styled.button`
 const drawerWidth = 240;
 
 const SideBarAtGroup = (props) => {
+  const [IsOpen, setIsOpen] = useState(false);
   const { setStoreGroups, setGroupId, storeGroups } = useGroupsStore();
   const { setStoreRooms, setRoomId } = useRoomsStore();
   const { setTypeGroup, setTypeRoom } = useTypeStore();
@@ -193,9 +209,18 @@ const SideBarAtGroup = (props) => {
       >
         <MyTitle onClick={moveHome}>waffle</MyTitle>
         <Divider />
-        {/* <Myspace /> */}
+        <StyleMySpace onClick={() => setIsOpen(!IsOpen)}>
+          <span>{group_name}</span>
+          <span style={{ margin: 10 }}>
+            {IsOpen ? (
+              <BsChevronUp></BsChevronUp>
+            ) : (
+              <BsChevronDown></BsChevronDown>
+            )}
+          </span>
+        </StyleMySpace>
 
-        <List>
+        <MyList>
           {groups.map((v, index) => (
             <MyListItem
               key={v.group_id}
@@ -208,7 +233,7 @@ const SideBarAtGroup = (props) => {
               </ListItemButton>
             </MyListItem>
           ))}
-        </List>
+        </MyList>
         <Divider />
         <List>
           {rooms.map((v, index) => (

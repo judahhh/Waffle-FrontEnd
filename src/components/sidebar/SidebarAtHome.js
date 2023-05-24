@@ -9,6 +9,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 
 import { api } from "../../api/Interceptors";
 import ModalCreate from "../modal/ModalGroup";
@@ -28,6 +29,33 @@ export const MyTitle = styled.h1`
 `;
 const BtnWrapper = styled.div`
   text-align: center;
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+`;
+export const StyleMySpace = styled.span`
+  text-align: center;
+  font-size: 22px;
+  margin: 15px 15px 0 15px;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  :hover {
+    cursor: pointer;
+  }
+`;
+const MyList = styled(List)`
+  &.show {
+    transition: opacity 0.2s linear;
+    transform: translate(0);
+    opacity: 1;
+    z-index: 1;
+  }
+  &.hide {
+    transition: all 0.2s linear;
+    transform: translateY(-9999px);
+    opacity: 0;
+  }
 `;
 
 const LogoutBtn = styled.button`
@@ -51,26 +79,32 @@ const SideBarAtHome = (props) => {
   let { setTypeGroup } = useTypeStore();
   const { setHeaderMenu } = useHeaderMenuStore();
   const [groups, setGroups] = useState([]);
+  const [IsOpen, setIsOpen] = useState(false);
+  let 그룹 = [
+    { group_id: 3, group_name: "그룹1" },
+    { group_id: 4, group_name: "그룹2" },
+    { group_id: 5, group_name: "그룹3" },
+  ];
   const navigate = useNavigate();
 
   useEffect(() => {
-    getGroups();
+    // getGroups();
   }, []);
 
   const getGroups = async () => {
-    const user_email = localStorage.getItem("email");
-    await api
-      .get(`/${user_email}/groups`, {
-        headers: {
-          access_token: localStorage.getItem("jwt_accessToken"),
-        },
-      })
-      .then((response) => {
-        console.log(response);
-        setGroups(response.data.groups);
-        setStoreGroups(response.data.groups);
-      })
-      .catch((err) => console.log(err));
+    // const user_email = localStorage.getItem("email");
+    // await api
+    //   .get(`/${user_email}/groups`, {
+    //     headers: {
+    //       access_token: localStorage.getItem("jwt_accessToken"),
+    //     },
+    //   })
+    //   .then((response) => {
+    //     console.log(response);
+    //     setGroups(response.data.groups);
+    //     setStoreGroups(response.data.groups);
+    //   })
+    //   .catch((err) => console.log(err));
   };
   console.log(storeGroups);
 
@@ -131,9 +165,18 @@ const SideBarAtHome = (props) => {
       >
         <MyTitle onClick={moveHome}>waffle</MyTitle>
         <Divider />
-
-        <List>
-          {groups.map((v, index) => (
+        <StyleMySpace onClick={() => setIsOpen(!IsOpen)}>
+          <span>My space</span>
+          <span style={{ margin: 10 }}>
+            {IsOpen ? (
+              <BsChevronUp></BsChevronUp>
+            ) : (
+              <BsChevronDown></BsChevronDown>
+            )}
+          </span>
+        </StyleMySpace>
+        <MyList className={IsOpen ? "show" : "hide"}>
+          {그룹.map((v, index) => (
             <ListItem
               key={v.group_id}
               onClick={() => {
@@ -145,7 +188,7 @@ const SideBarAtHome = (props) => {
               </ListItemButton>
             </ListItem>
           ))}
-        </List>
+        </MyList>
         <ModalCreate />
         <BtnWrapper>
           <LogoutBtn onClick={Logout}>Logout</LogoutBtn>
