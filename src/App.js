@@ -11,7 +11,7 @@ import Group from "./pages/group/Group";
 import Room from "./pages/room/Room";
 import PlanEdit from "./pages/plan/PlanEdit";
 import BoardPage from "./pages/board/BoardPage";
-import BoardDetail from "./components/board/BoardDetail";
+import BoardDetail from "./pages/board/BoardDetail";
 
 function App() {
   return (
