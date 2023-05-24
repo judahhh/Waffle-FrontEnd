@@ -39,6 +39,9 @@ const Button = styled.button`
   :hover {
     cursor: pointer;
   }
+  position: fixed;
+  bottom: 80px;
+  left: 20px;
 `;
 
 const ModalGroup = (props) => {
