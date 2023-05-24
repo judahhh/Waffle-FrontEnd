@@ -238,7 +238,7 @@ const ModalPlan = (props) => {
             <StyleLabel>
               {stateArr.map((v, i) => {
                 return (
-                  <StyleLabel>
+                  <StyleLabel key={v}>
                     {v}
                     <StyleRadio
                       type="radio"
