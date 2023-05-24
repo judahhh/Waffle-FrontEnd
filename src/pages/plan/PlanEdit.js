@@ -9,6 +9,12 @@ import SideBarAtGroup from "../../components/sidebar/SidebarAtGroup";
 import SideBarAtRoom from "../../components/sidebar/SidebarAtGroup";
 import Header from "../../components/header/Header";
 import { api } from "../../api/Interceptors";
+import { InputTextInModal } from "../../components/commons/InputInModal";
+import {
+  StyleLabel,
+  StyleRadio,
+  StyleSelect,
+} from "../../components/plan/ModalPlan";
 
 export const StyleEditWrapper = styled.form`
   display: flex;
@@ -17,6 +23,11 @@ export const StyleEditWrapper = styled.form`
 `;
 
 const PlanEdit = () => {
+  let today = new Date();
+  let yearToday = today.getFullYear();
+  let monthToday = ("0" + (today.getMonth() + 1)).slice(-2);
+  let dayToday = ("0" + today.getDate()).slice(-2);
+
   const navigate = useNavigate();
   const location = useLocation();
   const groups = location.state.groups;
@@ -28,15 +39,18 @@ const PlanEdit = () => {
   const start = location.state.start;
   const end = location.state.end;
   const plan_id = location.state.id;
-  const [selectStartYear, setSelectStartyear] = useState("2023");
-  const [selectStartMonth, setSelectStartMonth] = useState("");
-  const [selectStartDay, setSelectStartDay] = useState("");
+  const [selectStartYear, setSelectStartyear] = useState(yearToday);
+  const [selectStartMonth, setSelectStartMonth] = useState(monthToday);
+  const [selectStartDay, setSelectStartDay] = useState(dayToday);
 
-  const [selectEndYear, setSelectEndyear] = useState("2023");
-  const [selectEndMonth, setSelectEndMonth] = useState("");
-  const [selectEndDay, setSelectEndDay] = useState("");
+  const [selectEndYear, setSelectEndyear] = useState(yearToday);
+  const [selectEndMonth, setSelectEndMonth] = useState(monthToday);
+  const [selectEndDay, setSelectEndDay] = useState(dayToday);
+
   const [newTitle, setNewTitle] = useState("");
   const [newContent, setNewContent] = useState("");
+  const [state, setState] = useState("");
+  const stateArr = ["미완료", "완료", "진행중"];
   const [form, setForm] = useState({
     year: 2023,
     month: "01",
@@ -74,8 +88,8 @@ const PlanEdit = () => {
       title: newTitle,
       content: newContent,
       start: `${selectStartYear}-${selectStartMonth}-${selectStartDay}`,
-      end: `${selectEndYear}-${selectEndMonth}-${selectEndDay}`,
-      state: "미완료",
+      end: `${selectEndYear}-${selectEndMonth}-${selectEndDay}T16:00:00`,
+      state: state,
     };
     console.log(body);
     await api
@@ -106,7 +120,9 @@ const PlanEdit = () => {
         })
         .catch((err) => console.log(err));
   };
-
+  const handleRadioBtn = (e) => {
+    setState(e.target.value);
+  };
   return (
     <div>
       <Box sx={{ display: "flex" }}>
@@ -125,10 +141,10 @@ const PlanEdit = () => {
         >
           <Toolbar />
           <StyleEditWrapper onSubmit={editPlan}>
-            <h1>일정 수정하기</h1>
+            <h2>일정 수정하기</h2>
             <div>
-              <label>시작 날짜 : </label>
-              <select
+              <StyleLabel>시작 날짜 : </StyleLabel>
+              <StyleSelect
                 onChange={(e) => {
                   setSelectStartyear(e.target.value);
                 }}
@@ -139,8 +155,8 @@ const PlanEdit = () => {
                     {item}
                   </option>
                 ))}
-              </select>
-              <select
+              </StyleSelect>
+              <StyleSelect
                 onChange={(e) => {
                   setSelectStartMonth(e.target.value);
                 }}
@@ -151,8 +167,8 @@ const PlanEdit = () => {
                     {item}
                   </option>
                 ))}
-              </select>
-              <select
+              </StyleSelect>
+              <StyleSelect
                 onChange={(e) => {
                   setSelectStartDay(e.target.value);
                 }}
@@ -163,11 +179,11 @@ const PlanEdit = () => {
                     {item}
                   </option>
                 ))}
-              </select>
+              </StyleSelect>
             </div>
             <div>
               <label>종료 날짜 : </label>
-              <select
+              <StyleSelect
                 onChange={(e) => {
                   setSelectEndyear(e.target.value);
                 }}
@@ -178,8 +194,8 @@ const PlanEdit = () => {
                     {item}
                   </option>
                 ))}
-              </select>
-              <select
+              </StyleSelect>
+              <StyleSelect
                 onChange={(e) => {
                   setSelectEndMonth(e.target.value);
                 }}
@@ -190,8 +206,8 @@ const PlanEdit = () => {
                     {item}
                   </option>
                 ))}
-              </select>
-              <select
+              </StyleSelect>
+              <StyleSelect
                 onChange={(e) => {
                   setSelectEndDay(e.target.value);
                 }}
@@ -202,21 +218,38 @@ const PlanEdit = () => {
                     {item}
                   </option>
                 ))}
-              </select>
+              </StyleSelect>
             </div>
-            <input
+            <InputTextInModal
               type="text"
               value={newTitle}
               placeholder={title}
               onChange={(e) => setNewTitle(e.target.value)}
             />
 
-            <input
+            <InputTextInModal
               type="text"
               value={newContent}
               placeholder={content}
               onChange={(e) => setNewContent(e.target.value)}
             />
+            <StyleLabel>
+              {stateArr.map((v, i) => {
+                return (
+                  <StyleLabel>
+                    {v}
+                    <StyleRadio
+                      type="radio"
+                      value={v}
+                      key={v}
+                      checked={state === v}
+                      onChange={handleRadioBtn}
+                    />
+                  </StyleLabel>
+                );
+              })}
+            </StyleLabel>
+
             <input type="submit" value="EDIT" />
             <input type="button" value="DELETE" onClick={deletePlan} />
           </StyleEditWrapper>
