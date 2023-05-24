@@ -12,7 +12,12 @@ import ListItemText from "@mui/material/ListItemText";
 import ModalInviteGroup from "../modal/ModalInviteGroup";
 import ModalRoom from "../modal/ModalRoom";
 import { api } from "../../api/Interceptors";
-import { useGroupsStore, useRoomsStore, useTypeStore } from "../../store/Store";
+import {
+  useGroupsStore,
+  useHeaderMenuStore,
+  useRoomsStore,
+  useTypeStore,
+} from "../../store/Store";
 
 export const MyTitle = styled.h1`
   margin: 0;
@@ -66,21 +71,23 @@ const LogoutBtn = styled.button`
 const drawerWidth = 240;
 
 const SideBarAtGroup = (props) => {
-  const { setStoreGroups, setGroupId } = useGroupsStore();
+  const { setStoreGroups, setGroupId, storeGroups } = useGroupsStore();
   const { setStoreRooms, setRoomId } = useRoomsStore();
   const { setTypeGroup, setTypeRoom } = useTypeStore();
+  const { setHeaderMenu } = useHeaderMenuStore();
   const { group_id } = useParams();
   const { group_name, groups } = props;
-  const [rooms, setRooms] = useState();
+  const [rooms, setRooms] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    setTypeGroup(group_id);
     //여기서 현재 들어와있는 그룹 name 보여주기(약간 myspace처럼)
     getRooms();
-  }, []);
+  }, [group_id]);
 
-  const getRooms = useCallback(async () => {
+  const getRooms = async () => {
     //룸 목록 요청 api
     await api
       .get(`/${group_id}/rooms`)
@@ -90,7 +97,7 @@ const SideBarAtGroup = (props) => {
         setStoreRooms(response.data.room);
       })
       .catch((err) => console.log(err));
-  }, []);
+  };
 
   const DeleteGroup = async () => {
     let index;
@@ -107,6 +114,7 @@ const SideBarAtGroup = (props) => {
             console.log(response);
             if (response.status === 200) {
               alert("그룹 삭제가 완료되었습니다.");
+              setHeaderMenu("plan");
               navigate("/");
             } else alert("관리자가 아닙니다!");
           })
@@ -118,29 +126,33 @@ const SideBarAtGroup = (props) => {
   };
 
   const Logout = () => {
-    api
-      .post(
-        "/",
-        {},
-        {
-          headers: {
-            access_token: localStorage.getItem("jwt_accessToken"),
-            refresh_token: localStorage.getItem("jwt_refreshToken"),
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-        localStorage.removeItem("jwt_accessToken");
-        localStorage.removeItem("jwt_refreshToken");
-        localStorage.setItem("isLogined", false);
-        alert("로그아웃 성공! 다음에 또 만나요❤️");
-        navigate("/login");
-      })
-      .catch((err) => console.log(err));
+    if (window.confirm("로그아웃 하시겠습니까?")) {
+      api
+        .post(
+          "/",
+          {},
+          {
+            headers: {
+              access_token: localStorage.getItem("jwt_accessToken"),
+              refresh_token: localStorage.getItem("jwt_refreshToken"),
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response);
+          localStorage.removeItem("jwt_accessToken");
+          localStorage.removeItem("jwt_refreshToken");
+          localStorage.setItem("isLogined", false);
+          alert("로그아웃 성공! 다음에 또 만나요❤️");
+          navigate("/login");
+          setHeaderMenu("plan");
+        })
+        .catch((err) => console.log(err));
+    }
   };
   const moveGroupPage = async (group_name, group_id) => {
     setGroupId(group_id, group_name);
+    setHeaderMenu("plan");
     navigate(`/group/${group_id}`, {
       state: { groups: groups, group_name: group_name },
     });
@@ -148,6 +160,7 @@ const SideBarAtGroup = (props) => {
   };
   const moveRoomPage = async (room_name, room_id) => {
     setRoomId(room_id, room_name);
+    setHeaderMenu("plan");
     navigate(`/room/${room_id}`, {
       state: {
         rooms: rooms,
@@ -158,6 +171,10 @@ const SideBarAtGroup = (props) => {
       },
     });
     // window.location.reload();
+  };
+  const moveHome = () => {
+    navigate("/");
+    setHeaderMenu("plan");
   };
 
   return (
@@ -174,7 +191,7 @@ const SideBarAtGroup = (props) => {
         variant="permanent"
         anchor="left"
       >
-        <MyTitle onClick={() => navigate("/")}>waffle</MyTitle>
+        <MyTitle onClick={moveHome}>waffle</MyTitle>
         <Divider />
         {/* <Myspace /> */}
 

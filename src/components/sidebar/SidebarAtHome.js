@@ -12,7 +12,11 @@ import ListItemText from "@mui/material/ListItemText";
 
 import { api } from "../../api/Interceptors";
 import ModalCreate from "../modal/ModalGroup";
-import { useGroupsStore, useTypeStore } from "../../store/Store";
+import {
+  useGroupsStore,
+  useHeaderMenuStore,
+  useTypeStore,
+} from "../../store/Store";
 
 export const MyTitle = styled.h1`
   /* margin */
@@ -43,16 +47,17 @@ const LogoutBtn = styled.button`
 const drawerWidth = 240;
 
 const SideBarAtHome = (props) => {
-  const { setStoreGroups, storeGroups, setGroupId } = useGroupsStore();
-  const { setTypeGroup } = useTypeStore();
-  const [groups, setGroups] = useState([{ group_id: 6, group_name: "그룹1" }]);
+  let { setStoreGroups, storeGroups, setGroupId } = useGroupsStore();
+  let { setTypeGroup } = useTypeStore();
+  const { setHeaderMenu } = useHeaderMenuStore();
+  const [groups, setGroups] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     getGroups();
   }, []);
 
-  const getGroups = useCallback(async () => {
+  const getGroups = async () => {
     const user_email = localStorage.getItem("email");
     await api
       .get(`/${user_email}/groups`, {
@@ -66,36 +71,48 @@ const SideBarAtHome = (props) => {
         setStoreGroups(response.data.groups);
       })
       .catch((err) => console.log(err));
-  }, []);
+  };
+  console.log(storeGroups);
 
   const Logout = () => {
-    api
-      .post(
-        "/",
-        {},
-        {
-          headers: {
-            access_token: localStorage.getItem("jwt_accessToken"),
-            refresh_token: localStorage.getItem("jwt_refreshToken"),
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-        localStorage.removeItem("jwt_accessToken");
-        localStorage.removeItem("jwt_refreshToken");
-        localStorage.setItem("isLogined", false);
-        alert("로그아웃 성공! 다음에 또 만나요❤️");
-        navigate("/login");
-      })
-      .catch((err) => console.log(err));
+    if (window.confirm("로그아웃 하시겠습니까?")) {
+      api
+        .post(
+          "/",
+          {},
+          {
+            headers: {
+              access_token: localStorage.getItem("jwt_accessToken"),
+              refresh_token: localStorage.getItem("jwt_refreshToken"),
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response);
+          localStorage.removeItem("jwt_accessToken");
+          localStorage.removeItem("jwt_refreshToken");
+          localStorage.setItem("isLogined", false);
+          alert("로그아웃 성공! 다음에 또 만나요❤️");
+          navigate("/login");
+          setHeaderMenu("plan");
+        })
+        .catch((err) => console.log(err));
+    }
   };
-  const moveGroupPage = async (group_name, group_id) => {
+  const moveGroupPage = (group_name, group_id) => {
+    setTypeGroup(group_id);
+    localStorage.setItem("type", "group");
+    localStorage.setItem("group_id", group_id);
     setGroupId(group_id, group_name);
+    setHeaderMenu("plan");
     navigate(`/group/${group_id}`, {
       state: { group_name: group_name, groups: groups },
     });
     // window.location.reload();
+  };
+  const moveHome = () => {
+    navigate("/");
+    setHeaderMenu("plan");
   };
 
   return (
@@ -112,7 +129,7 @@ const SideBarAtHome = (props) => {
         variant="permanent"
         anchor="left"
       >
-        <MyTitle onClick={() => navigate("/")}>waffle</MyTitle>
+        <MyTitle onClick={moveHome}>waffle</MyTitle>
         <Divider />
 
         <List>
