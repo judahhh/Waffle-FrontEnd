@@ -4,23 +4,29 @@ const useTypeStore = create((set) => ({
   type: "home",
   type_id: localStorage.getItem("id"),
   type_name: "",
-  setTypeGroup: (type_id) =>
-    set((state) => ({ type: "group", type_id: type_id })),
-  setTypeRoom: (type_id) =>
-    set((state) => ({ type: "room", type_id: type_id })),
+  setTypeGroup(type_id) {
+    set((state) => ({ type: "group", type_id: type_id }));
+  },
+
+  setTypeRoom(type_id) {
+    set((state) => ({ type: "room", type_id: type_id }));
+  },
 }));
 const useHeaderMenuStore = create((set) => ({
   headerMenu: "plan",
   setHeaderMenu: (menu) => set((state) => ({ headerMenu: menu })),
 }));
 const useGroupsStore = create((set) => ({
-  storeGroups: [{ group_id: 6, group_name: "그룹1" }],
+  storeGroups: [],
   group_id: "",
   group_name: "",
-  setStoreGroups: (groups) => set((state) => ({ storegGroups: groups })),
+  setStoreGroups(groups) {
+    set((state) => ({ storeGroups: groups }));
+  },
   //setGroupId와 setGroupName으로 분리해야될지도
-  setGroupId: (group_id, group_name) =>
-    set(() => ({ group_id: group_id, group_name: group_name })),
+  setGroupId(group_id, group_name) {
+    set(() => ({ group_id: group_id, group_name: group_name }));
+  },
 }));
 const useRoomsStore = create((set) => ({
   storeRooms: [],
