@@ -8,6 +8,8 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 
 import { api } from "../../api/Interceptors";
+import { InputTextInModal, InputCheckInModal } from "../commons/InputInModal";
+import { BtnInModal } from "../commons/BtnInModal";
 
 const style = {
   position: "absolute",
@@ -92,7 +94,7 @@ const ModalRoom = (props) => {
           </Typography>
           <form>
             룸 이름 :{" "}
-            <input
+            <InputTextInModal
               type="text"
               label="룸 이름"
               value={room_name}
@@ -116,7 +118,7 @@ const ModalRoom = (props) => {
               private
             </div>
             <p>
-              <input type="submit" value="생성" />
+              <BtnInModal type="submit" value="생성" />
             </p>
           </form>
         </Box>

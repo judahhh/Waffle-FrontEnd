@@ -7,6 +7,8 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 
 import { api } from "../../api/Interceptors";
+import { InputTextInModal, InputCheckInModal } from "../commons/InputInModal";
+import { BtnInModal } from "../commons/BtnInModal";
 
 const style = {
   position: "absolute",
@@ -84,14 +86,14 @@ const ModalInviteGroup = (props) => {
           </Typography>
           <form>
             초대 이메일
-            <input
+            <InputTextInModal
               type="text"
               label="초대자 이메일"
               value={inviteEmail}
               onChange={(e) => setInviteEmail(e.target.value)}
             />
             <p>
-              <input type="submit" value="초대하기" />
+              <BtnInModal type="submit" value="초대하기" />
             </p>
           </form>
         </Box>
