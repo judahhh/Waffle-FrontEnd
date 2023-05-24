@@ -1,16 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import { TextField } from "@mui/material";
 import Modal from "@mui/material/Modal";
+
 import { api } from "../../api/Interceptors";
 import { useTypeStore } from "../../store/Store";
 import { useGroupsStore } from "../../store/Store";
 import { useRoomsStore } from "../../store/Store";
+import { BtnInModal } from "../commons/BtnInModal";
+import { InputTextInModal, InputCheckInModal } from "../commons/InputInModal";
 
 const style = {
   position: "absolute",
@@ -51,15 +51,15 @@ const ModalBoardCreate = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  let { type, type_id } = useTypeStore();
+  let { type, type_id, setTypeGroup, setTypeRoom } = useTypeStore();
   const { group_id } = useGroupsStore();
   const { room_id } = useRoomsStore();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [noticeOrNot, setNoticeOrNot] = useState("1");
+  const [noticeOrNot, setNoticeOrNot] = useState(false);
 
-  if (type === "group") type_id = group_id;
-  else type_id = room_id;
+  // if (type === "group") type_id = group_id;
+  // else type_id = room_id;
   let today = new Date();
 
   let year = today.getFullYear();
@@ -68,19 +68,28 @@ const ModalBoardCreate = () => {
   let date = year + "-" + month + "-" + day;
   console.log(date);
 
+  useEffect(() => {
+    console.log(localStorage.getItem("type"));
+    localStorage.getItem("type") == "group"
+      ? setTypeGroup(group_id)
+      : setTypeRoom(room_id);
+  }, []);
   const createBoard = () => {
     let body = {
       title: title,
       content: content,
       date: date,
-      notice: noticeOrNot,
+      notice: noticeOrNot === true ? "0" : "1",
     };
     api
       .post(`/note/${type}/${type_id}/create`, body)
       .then((response) => {
         console.log(response);
-        handleClose();
-        window.location.reload();
+        response.status === 200
+          ? handleClose()
+          : alert("게시글 생성에 실패하였습니다.");
+
+        // window.location.reload();
       })
       .catch((err) => console.log(err));
   };
@@ -94,31 +103,35 @@ const ModalBoardCreate = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} onSubmit={createBoard}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            게시글 생성
-          </Typography>
+          <h2>게시글 생성</h2>
           <form>
-            <p>
-              <input
+            <div>
+              게시글 제목 :
+              <InputTextInModal
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
+            </div>
+            <div>
+              <div>게시글 내용:</div>
               <textarea
                 name="content"
-                cols="30"
+                cols="50"
                 rows="10"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
               ></textarea>
-              공지글인가요?
-              <input
-                type="checkbox"
-                value={noticeOrNot}
-                onClick={() => setNoticeOrNot("0")}
-              />
-              <input type="submit" value="생성하기" />
-            </p>
+            </div>
+            공지글인가요?
+            <InputCheckInModal
+              type="checkbox"
+              value={noticeOrNot}
+              onClick={() => setNoticeOrNot(!noticeOrNot)}
+            />
+            <div>
+              <BtnInModal value="생성하기" />
+            </div>
           </form>
         </Box>
       </Modal>
