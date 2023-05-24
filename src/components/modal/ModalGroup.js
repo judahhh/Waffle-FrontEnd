@@ -7,7 +7,9 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 
+import { InputTextInModal } from "../commons/InputInModal";
 import { api } from "../../api/Interceptors";
+import { BtnInModal } from "../commons/BtnInModal";
 
 const style = {
   position: "absolute",
@@ -81,19 +83,17 @@ const ModalGroup = (props) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} onSubmit={createGroupRoom}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            그룹 생성
-          </Typography>
+          <h2>그룹 생성</h2>
           <form>
             그룹 이름 :{" "}
-            <input
+            <InputTextInModal
               type="text"
               label="그룹 이름"
               value={group_name}
               onChange={(e) => setGroup_name(e.target.value)}
             />
             <p>
-              <input type="submit" value="생성" />
+              <BtnInModal type="submit" value="생성" />
             </p>
           </form>
         </Box>
