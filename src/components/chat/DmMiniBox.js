@@ -3,18 +3,27 @@ import styled from "styled-components";
 
 import { Box, Card, CardContent, Typography } from "@mui/material";
 
+import ModalOtherProfile from "../commons/ModalOtherProfile";
+
 const MessageBox = styled(Card)`
   height: 40px;
 `;
+export const StyleOtherName = styled.p`
+  font-weight: bold;
+  margin: 5px;
+  :hover {
+    cursor: pointer;
+  }
+`;
 
 const DmMiniBox = ({ user_name, user_email, time, content }) => {
-  //#f5b66c
   let isUser = localStorage.getItem("email") === user_email;
   const color = isUser ? "#f5b66c" : "white";
   return (
     <Box padding={`7px`}>
       {user_email !== localStorage.getItem("email") && (
-        <p style={{ fontWeight: "bold", margin: "5px" }}>{user_name}</p>
+        <StyleOtherName>{user_name}</StyleOtherName>
+        // <ModalOtherProfile name={user_name}></ModalOtherProfile>
       )}
       <MessageBox style={{ backgroundColor: color }}>
         <CardContent>

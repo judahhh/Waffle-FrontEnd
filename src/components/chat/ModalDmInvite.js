@@ -4,10 +4,12 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import { FcInvite } from "react-icons/fc";
 
 import { api } from "../../api/Interceptors";
+import { InputTextInModal } from "../commons/InputInModal";
+import { BtnInModal } from "../commons/BtnInModal";
 
 const style = {
   position: "absolute",
@@ -40,7 +42,7 @@ const ButtonInDM = styled.button`
 
 const ModalDmInvite = (props) => {
   const navigate = useNavigate();
-  const { dm_id } = props;
+  const { dm_id, dmName } = props;
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -61,7 +63,7 @@ const ModalDmInvite = (props) => {
 
   return (
     <div>
-      <ButtonInDM onClick={handleOpen}>+</ButtonInDM>
+      <FcInvite onClick={handleOpen}></FcInvite>
 
       <Modal
         open={open}
@@ -70,19 +72,17 @@ const ModalDmInvite = (props) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} onSubmit={InviteFriendToDM}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            채팅방에 사용자 초대
-          </Typography>
+          <h2>채팅방에 사용자 초대</h2>
           <form>
             초대 이메일
-            <input
+            <InputTextInModal
               type="text"
               label="초대자 이메일"
               value={inviteEmail}
               onChange={(e) => setInviteEmail(e.target.value)}
             />
             <p>
-              <input type="submit" value="초대하기" />
+              <BtnInModal type="submit" value="초대하기" />
             </p>
           </form>
         </Box>

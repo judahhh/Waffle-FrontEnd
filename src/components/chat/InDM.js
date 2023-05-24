@@ -3,11 +3,14 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import * as StompJs from "@stomp/stompjs";
 
-import { Grid, Box, Card, CardContent, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
+import { VscTrash } from "react-icons/vsc";
+import { BsCameraVideo } from "react-icons/bs";
 
 import { api } from "../../api/Interceptors";
 import ModalDmInvite from "./ModalDmInvite";
 import DmMiniBox from "./DmMiniBox";
+import ModalOtherProfile from "../commons/ModalOtherProfile";
 
 const DmHeaderData = styled.p`
   @media screen and (max-width: 1000px) {
@@ -87,13 +90,13 @@ export const ButtonInDM = styled.button`
   }
   margin: 5px;
 `;
-const SpeechBubble = styled.div`
-  background-color: wheat;
-  color: black;
-  border: none;
-  height: 40px;
-  border-radius: 5px;
-`;
+// const SpeechBubble = styled.div`
+//   background-color: wheat;
+//   color: black;
+//   border: none;
+//   height: 40px;
+//   border-radius: 5px;
+// `;
 const ButtonSubmit = styled.button`
   width: 50px;
   height: 30px;
@@ -129,7 +132,6 @@ const InDM = (props) => {
   };
   useEffect(() => {
     window.addEventListener("resize", handleResize);
-    // console.log(resize);
     return () => {
       window.removeEventListener("resize", handleResize);
     };
@@ -240,11 +242,6 @@ const InDM = (props) => {
     client.current.deactivate();
   };
 
-  // const handleChange = (event) => {
-  //   // 채팅 입력 시 state에 값 설정
-  //   setMessage(event.target.value);
-  // };
-
   const handleSubmit = (e) => {
     if (message.length === 0) return;
     // 보내기 버튼 눌렀을 때 publish
@@ -295,19 +292,16 @@ const InDM = (props) => {
     <StyleDMWrapper resize={resize}>
       <StyleBox resize={resize} ref={messageListRef}>
         <DMChatHeader resize={resize}>
-          {/* <ButtonInDM onClick={InviteFriendToDM}>
-            +
-          </ButtonInDM> */}
-          <ButtonInDM onClick={LeaveDM}>-</ButtonInDM>
-          <ModalDmInvite dm_id={dm_id} />
+          <VscTrash onClick={LeaveDM}></VscTrash>
+          <ModalDmInvite dm_id={dm_id} dmName={dmName} />
 
           <h3 style={{ margin: "10px" }}>{dmName}</h3>
 
           {peopleIncluded.map((v, i) => (
-            <p key={v.id}> &nbsp; {v.name} | </p>
+            <ModalOtherProfile key={v.id} other={v} />
           ))}
-          <ButtonInDM onClick={moveToVideoChat}>1</ButtonInDM>
-          <ButtonInDM onClick={moveToVideoChat2}>2</ButtonInDM>
+          <BsCameraVideo onClick={moveToVideoChat}></BsCameraVideo>
+          {/* <ButtonInDM onClick={moveToVideoChat2}>2</ButtonInDM> */}
         </DMChatHeader>
 
         {/* messageList 뿌려주기 */}
@@ -329,11 +323,15 @@ const InDM = (props) => {
                   : "flex-start"
               }
             >
+              {/* 여기서 messages받아와서 뿌릴 때 보낸사람 name외에 
+              보낸사람id도 있어야함,pub/chat도 마찬가지로 */}
               <DmMiniBox
                 user_name={v.user_name}
+                //user_id={v.id}
                 user_email={v.user_email}
                 time={v.time.slice(11, 16)}
                 content={v.content}
+                //peopleIncluded={peopleIncluded}
               />
             </Grid>
 

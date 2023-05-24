@@ -25,6 +25,7 @@ const MyListItem = styled(ListItem)`
   &.selected {
     background-color: rgba(245, 182, 108, 0.2);
   }
+  font-family: "Acme", sans-serif;
 `;
 const ChatListArea = (props) => {
   const navigate = useNavigate();
@@ -83,25 +84,37 @@ const ChatListArea = (props) => {
           }}
         />
         {/* 채팅 리스트들 나열 시작 */}
-        <List>
-          {chatList.map((v, i) => (
-            <List key={v.id}>
-              <MyListItem
-                alignItems="flex-start"
-                // 클릭하면 dm id 넘겨주기
-                onClick={() => moveDMRoom(v.id, v.name)}
-                className={dm_id == v.id ? "selected" : ""}
-              >
-                <ListItemText primary={v.name} secondary={v.last_chat} />
-              </MyListItem>
-              <Divider
-                sx={{
-                  borderColor: "grey",
-                }}
-              />
-            </List>
-          ))}
-        </List>
+        {chatList.length === 0 ? (
+          <>
+            <h2 style={{ marginTop: 200, padding: 40 }}>채팅방을 생성하세요</h2>
+            <h1 style={{ visibility: "hidden" }}>
+              <br />
+              <br />
+              <br />
+              <br />
+            </h1>
+          </>
+        ) : (
+          <List>
+            {chatList.map((v, i) => (
+              <List key={v.id}>
+                <MyListItem
+                  alignItems="flex-start"
+                  // 클릭하면 dm id 넘겨주기
+                  onClick={() => moveDMRoom(v.id, v.name)}
+                  className={dm_id == v.id ? "selected" : ""}
+                >
+                  <ListItemText primary={v.name} secondary={v.last_chat} />
+                </MyListItem>
+                <Divider
+                  sx={{
+                    borderColor: "grey",
+                  }}
+                />
+              </List>
+            ))}
+          </List>
+        )}
       </List>
       {/* 이렇게 안 하고 dmDetail페이지를 만들어서 페이지 이동? */}
       {/* <InDM /> */}
