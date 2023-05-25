@@ -28,11 +28,11 @@ const Wrapper = styled.div`
 `;
 const Button = styled.button`
   width: 200px;
-  height: 50px;
+  height: 40px;
   border: none;
   border-radius: 10px;
   background-color: #f5b66c;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: bold;
   margin: auto;
   margin-bottom: 10px;
@@ -79,9 +79,7 @@ const ModalInviteRoom = (props) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} onSubmit={InviteRoom}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            룸에 사용자 초대
-          </Typography>
+          <h2 style={{ textAlign: "center" }}>룸에 사용자 초대</h2>
           <form>
             초대 이메일
             <InputTextInModal
@@ -90,7 +88,7 @@ const ModalInviteRoom = (props) => {
               value={inviteEmail}
               onChange={(e) => setInviteEmail(e.target.value)}
             />
-            <p>
+            <p style={{ textAlign: "center" }}>
               <BtnInModal type="submit" value="초대하기" />
             </p>
           </form>

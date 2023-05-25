@@ -60,11 +60,11 @@ const MyList = styled(List)`
 
 const LogoutBtn = styled.button`
   width: 200px;
-  height: 50px;
+  height: 40px;
   border-radius: 10px;
   border: solid 1px #f5b66c;
   background-color: white;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: bold;
   margin: auto;
   :hover {

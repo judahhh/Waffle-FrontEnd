@@ -81,57 +81,73 @@ const BoardList = () => {
           onChange={(e) => {}}
         />
         {/* 게시판 공지글 나열 시작 */}
-        <List>
-          {boardNotice.map((v, i) => (
-            <List key={v.id}>
-              <MyListItem
-                alignItems="flex-start"
-                // 클릭하면 id 넘겨주기
-                onClick={() =>
-                  navigate(`/${type}/${type_id}/board/${v.id}`, {
-                    state: { board_id: v.id },
-                  })
-                }
-                className={board_id === v.id ? "selected" : ""}
-              >
-                <ListItemText
-                  primaryTypographyProps={{ fontWeight: "bold" }}
-                  secondaryTypographyProps={{ fontWeight: "bold" }}
-                  primary={v.title}
-                  secondary={v.content.slice(0, 10)}
-                />
-              </MyListItem>
-              <Divider
-                sx={{
-                  borderColor: "grey",
-                }}
-              />
+        {boardNote.length === 0 && boardNotice.length === 0 ? (
+          <>
+            <h2 style={{ marginTop: 200, padding: 40 }}>게시글이 없습니다</h2>
+            <h1 style={{ visibility: "hidden" }}>
+              <br />
+              <br />
+              <br />
+              <br />
+            </h1>
+          </>
+        ) : (
+          <>
+            <List>
+              {boardNotice.map((v, i) => (
+                <List key={v.id}>
+                  <MyListItem
+                    alignItems="flex-start"
+                    // 클릭하면 id 넘겨주기
+                    onClick={() =>
+                      navigate(`/${type}/${type_id}/board/${v.id}`, {
+                        state: { board_id: v.id },
+                      })
+                    }
+                    className={board_id === v.id ? "selected" : ""}
+                  >
+                    <ListItemText
+                      primaryTypographyProps={{ fontWeight: "bold" }}
+                      secondaryTypographyProps={{ fontWeight: "bold" }}
+                      primary={v.title}
+                      secondary={v.content.slice(0, 10)}
+                    />
+                  </MyListItem>
+                  <Divider
+                    sx={{
+                      borderColor: "grey",
+                    }}
+                  />
+                </List>
+              ))}
             </List>
-          ))}
-        </List>
-        {/* 게시판 일반 글 나열  */}
-        <List>
-          {boardNote.map((v, i) => (
-            <List key={v.id}>
-              <MyListItem
-                alignItems="flex-start"
-                // 클릭하면 id 넘겨주기
-                onClick={() => navigate(`/${type}/${type_id}/board/${v.id}`)}
-                className={board_id === v.id ? "selected" : ""}
-              >
-                <ListItemText
-                  primary={v.title}
-                  secondary={v.content.slice(0, 10)}
-                />
-              </MyListItem>
-              <Divider
-                sx={{
-                  borderColor: "grey",
-                }}
-              />
+            {/* 게시판 일반 글 나열  */}
+            <List>
+              {boardNote.map((v, i) => (
+                <List key={v.id}>
+                  <MyListItem
+                    alignItems="flex-start"
+                    // 클릭하면 id 넘겨주기
+                    onClick={() =>
+                      navigate(`/${type}/${type_id}/board/${v.id}`)
+                    }
+                    className={board_id === v.id ? "selected" : ""}
+                  >
+                    <ListItemText
+                      primary={v.title}
+                      secondary={v.content.slice(0, 10)}
+                    />
+                  </MyListItem>
+                  <Divider
+                    sx={{
+                      borderColor: "grey",
+                    }}
+                  />
+                </List>
+              ))}
             </List>
-          ))}
-        </List>
+          </>
+        )}
       </List>
       {/* <BoardDetail></BoardDetail> */}
     </>

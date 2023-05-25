@@ -69,11 +69,11 @@ const DeleteBtn = styled.div`
 `;
 const LogoutBtn = styled.button`
   width: 200px;
-  height: 50px;
+  height: 40px;
   border: solid 1px #f5b66c;
   background-color: white;
   border-radius: 10px;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: bold;
   margin: auto;
   :hover {

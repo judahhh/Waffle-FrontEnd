@@ -29,18 +29,18 @@ const Wrapper = styled.div`
 `;
 const Button = styled.button`
   width: 200px;
-  height: 50px;
+  height: 40px;
   border: none;
   border-radius: 10px;
   background-color: #f5b66c;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: bold;
   margin: auto;
   :hover {
     cursor: pointer;
   }
   position: fixed;
-  bottom: 80px;
+  bottom: 70px;
   left: 20px;
 `;
 
@@ -86,7 +86,7 @@ const ModalGroup = (props) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} onSubmit={createGroupRoom}>
-          <h2>그룹 생성</h2>
+          <h2 style={{ textAlign: "center" }}>그룹 생성</h2>
           <form>
             그룹 이름 :{" "}
             <InputTextInModal
@@ -95,7 +95,7 @@ const ModalGroup = (props) => {
               value={group_name}
               onChange={(e) => setGroup_name(e.target.value)}
             />
-            <p>
+            <p style={{ textAlign: "center" }}>
               <BtnInModal type="submit" value="생성" />
             </p>
           </form>
