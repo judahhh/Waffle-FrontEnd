@@ -119,16 +119,29 @@ const Header = () => {
               <HeaderBtn
                 id="일정"
                 onClick={() => navigate(`/${type}/${type_id}`)}
+                className={headerMenu === "plan" ? "selected" : ""}
               >
                 일정
               </HeaderBtn>
-              <HeaderBtn id="게시판" onClick={movetoBoard}>
+              <HeaderBtn
+                id="게시판"
+                onClick={movetoBoard}
+                className={headerMenu === "board" ? "selected" : ""}
+              >
                 게시판
               </HeaderBtn>
-              <HeaderBtn id="프로필" onClick={() => navigate("/myprofile")}>
+              <HeaderBtn
+                id="프로필"
+                onClick={moveProfile}
+                className={headerMenu === "profile" ? "selected" : ""}
+              >
                 프로필
               </HeaderBtn>
-              <HeaderBtn id="채팅" onClick={moveChat}>
+              <HeaderBtn
+                id="채팅"
+                onClick={moveChat}
+                className={headerMenu === "chat" ? "selected" : ""}
+              >
                 채팅
               </HeaderBtn>
             </>
