@@ -244,7 +244,7 @@ const MyData = () => {
             rows="5"
             placeholder={introduction}
             onChange={(e) => setIntroduction(e.target.value)}
-            autofocus
+            autoFocus
           ></StyleTextArea>
         </>
       ) : (
