@@ -20,7 +20,7 @@ const DmMiniBox = ({ user_name, user_email, time, content }) => {
   let isUser = localStorage.getItem("email") === user_email;
   const color = isUser ? "#f5b66c" : "white";
   return (
-    <Box padding={`7px`}>
+    <Box padding={`5px`}>
       {user_email !== localStorage.getItem("email") && (
         <StyleOtherName>{user_name}</StyleOtherName>
         // <ModalOtherProfile name={user_name}></ModalOtherProfile>

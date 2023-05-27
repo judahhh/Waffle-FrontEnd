@@ -83,7 +83,17 @@ const BoardList = () => {
         {/* 게시판 공지글 나열 시작 */}
         {boardNote.length === 0 && boardNotice.length === 0 ? (
           <>
-            <h2 style={{ marginTop: 200, padding: 40 }}>게시글이 없습니다</h2>
+            <p
+              style={{
+                marginTop: 200,
+                padding: 40,
+                marginRight: 20,
+                fontSize: 20,
+                textAlign: "center",
+              }}
+            >
+              게시글이 없습니다
+            </p>
             <h1 style={{ visibility: "hidden" }}>
               <br />
               <br />

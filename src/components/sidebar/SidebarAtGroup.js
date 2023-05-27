@@ -89,7 +89,7 @@ const SideBarAtGroup = (props) => {
   const [IsOpen, setIsOpen] = useState(false);
   const { setStoreGroups, setGroupId, storeGroups } = useGroupsStore();
   const { setStoreRooms, setRoomId } = useRoomsStore();
-  const { setTypeGroup, setTypeRoom } = useTypeStore();
+  const { setTypeGroup, setTypeRoom, setTypeHome } = useTypeStore();
   const { setHeaderMenu } = useHeaderMenuStore();
   const { group_id } = useParams();
   const { group_name, groups } = props;
@@ -191,6 +191,7 @@ const SideBarAtGroup = (props) => {
   const moveHome = () => {
     navigate("/");
     setHeaderMenu("plan");
+    setTypeHome();
   };
 
   return (

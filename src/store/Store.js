@@ -11,6 +11,9 @@ const useTypeStore = create((set) => ({
   setTypeRoom(type_id) {
     set((state) => ({ type: "room", type_id: type_id }));
   },
+  setTypeHome() {
+    set((state) => ({ type: "home", type_id: localStorage.getItem("id") }));
+  },
 }));
 const useHeaderMenuStore = create((set) => ({
   headerMenu: "plan",

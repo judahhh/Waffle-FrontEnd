@@ -85,7 +85,7 @@ const drawerWidth = 240;
 
 const SidebarAtRoom = (props) => {
   const [IsOpen, setIsOpen] = useState(false);
-  const { setTypeGroup, setTypeRoom } = useTypeStore();
+  const { setTypeGroup, setTypeRoom, setTypeHome } = useTypeStore();
   const { setStoreRooms, setRoomId } = useRoomsStore();
   const { setStoreGroups, setGroupId } = useGroupsStore();
   const { setHeaderMenu } = useHeaderMenuStore();
@@ -168,6 +168,7 @@ const SidebarAtRoom = (props) => {
   const moveHome = () => {
     navigate("/");
     setHeaderMenu("plan");
+    setTypeHome();
   };
   return (
     <div>

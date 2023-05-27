@@ -86,7 +86,17 @@ const ChatListArea = (props) => {
         {/* 채팅 리스트들 나열 시작 */}
         {chatList.length === 0 ? (
           <>
-            <h2 style={{ marginTop: 200, padding: 40 }}>채팅방을 생성하세요</h2>
+            <p
+              style={{
+                marginTop: 200,
+                padding: 40,
+                textAlign: "center",
+                fontSize: 20,
+                marginRight: 20,
+              }}
+            >
+              채팅방을 생성하세요
+            </p>
             <h1 style={{ visibility: "hidden" }}>
               <br />
               <br />

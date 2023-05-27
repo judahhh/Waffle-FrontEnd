@@ -76,7 +76,7 @@ const drawerWidth = 240;
 
 const SideBarAtHome = (props) => {
   let { setStoreGroups, storeGroups, setGroupId } = useGroupsStore();
-  let { setTypeGroup } = useTypeStore();
+  let { setTypeGroup, setTypeHome } = useTypeStore();
   const { setHeaderMenu } = useHeaderMenuStore();
   const [groups, setGroups] = useState([]);
   const [IsOpen, setIsOpen] = useState(false);
@@ -129,6 +129,7 @@ const SideBarAtHome = (props) => {
           alert("로그아웃 성공! 다음에 또 만나요❤️");
           navigate("/login");
           setHeaderMenu("plan");
+          setTypeHome();
         })
         .catch((err) => console.log(err));
     }
@@ -147,6 +148,7 @@ const SideBarAtHome = (props) => {
   const moveHome = () => {
     navigate("/");
     setHeaderMenu("plan");
+    setTypeHome();
   };
 
   return (
