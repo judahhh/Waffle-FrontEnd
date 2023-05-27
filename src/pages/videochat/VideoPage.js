@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 
 import UserVideoComponent from "./UserVideoComponent";
 import { api } from "../../api/Interceptors";
+import { InputTextInModal } from "../../components/commons/InputInModal";
+import { BtnInModal, ButtonInModal } from "../../components/commons/BtnInModal";
 
 function withParams(Component) {
   return (props) => <Component {...props} params={useParams()} />;
@@ -310,7 +312,14 @@ class VideoPage extends Component {
     return (
       <div className="container">
         {this.state.session === undefined ? (
-          <div id="join">
+          <div
+            id="join"
+            style={{
+              justifyContent: "center",
+              textAlign: "center",
+              alignItems: "center",
+            }}
+          >
             <div id="img-div"></div>
             <div id="join-dialog" className="jumbotron vertical-center">
               <h1> "채팅방 이름" in Waffle </h1>
@@ -328,7 +337,7 @@ class VideoPage extends Component {
                 </p>
                 <p>
                   <label> 화상회의실 이름: </label>
-                  <input
+                  <InputTextInModal
                     className="form-control"
                     type="text"
                     id="sessionId"
@@ -338,7 +347,7 @@ class VideoPage extends Component {
                   />
                 </p>
                 <p className="text-center">
-                  <input
+                  <BtnInModal
                     className="btn btn-lg btn-success"
                     name="commit"
                     type="submit"
@@ -354,19 +363,26 @@ class VideoPage extends Component {
           <div id="session">
             <div id="session-header">
               <h1 id="session-title">{mySessionId}</h1>
-              <input
+              <ButtonInModal
                 className="btn btn-large btn-danger"
                 type="button"
                 id="buttonLeaveSession"
                 onClick={this.leaveSession}
                 value="Leave session"
               />
-              <input
+              <ButtonInModal
                 className="btn btn-large btn-success"
                 type="button"
                 id="buttonSwitchCamera"
                 onClick={this.switchCamera}
                 value="Switch Camera"
+              />
+              <ButtonInModal
+                className="btn btn-large btn-success"
+                type="button"
+                id="buttonSwitchMic"
+                onClick={this.switchCamera}
+                value="Switch Mic"
               />
             </div>
 
