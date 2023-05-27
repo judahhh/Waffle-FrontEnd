@@ -95,7 +95,7 @@ const ModalProfileUpdate = () => {
                 onChange={(e) => setDetail(e.target.value)}
               />
             </div>
-            <p>
+            <p style={{ textAlign: "center" }}>
               <BtnInModal type="submit" value="제출" />
             </p>
           </form>

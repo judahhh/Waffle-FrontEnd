@@ -309,7 +309,7 @@ const MyData = () => {
               ) : (
                 <>
                   <h3 style={{ margin: 10 }}>{v.title}</h3>
-                  <p>{v.detail}</p>
+                  <p style={{ margin: 0 }}>{v.detail}</p>
                   <div style={{ display: "inline" }}>
                     <Button onClick={() => setEditProjectMode(true)}>
                       수정
