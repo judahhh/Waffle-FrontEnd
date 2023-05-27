@@ -12,6 +12,7 @@ import Room from "./pages/room/Room";
 import PlanEdit from "./pages/plan/PlanEdit";
 import BoardPage from "./pages/board/BoardPage";
 import BoardDetail from "./pages/board/BoardDetail";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -62,6 +63,7 @@ function App() {
             path="/myprofile"
             element={<MyProfilePage></MyProfilePage>}
           ></Route>
+          <Route path="*" element={<NotFound></NotFound>}></Route>
         </Routes>
       </BrowserRouter>
     </>
