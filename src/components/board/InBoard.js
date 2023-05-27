@@ -129,7 +129,10 @@ const InBoard = ({ board_id }) => {
         .delete(`/note/${board_id}/delete`)
         .then((response) => {
           console.log(response);
-          alert("게시글 삭제 완료");
+
+          response.status === 200
+            ? alert("게시글 삭제 완료")
+            : alert("삭제 권한이 없습니다!");
 
           // navigate(`/${type}/${type_id}/board`, {
           //   state: { type_name: type_name, groups: storeGroups, rooms: storeRooms },
