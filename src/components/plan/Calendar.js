@@ -88,22 +88,25 @@ const Calendar = (props) => {
       },
     });
   };
+  const type = props.type;
+  const type_id = props.type_id;
   const getPlan = async () => {
-    const type = props.type;
-    const type_id = props.type_id;
     console.log(type, type_id);
     await api
       .get(`/plan/${type}/${type_id}/list`)
       .then((response) => {
         //여기서 캘린더에 보여줄 planList 세팅하기
         console.log(response);
+        response.data.plans.map((v, i) => {
+          v["color"] = "#f5b66c";
+        });
         setPlanList(response.data.plans);
       })
       .catch((err) => console.log(err));
   };
   useEffect(() => {
     getPlan();
-  }, []);
+  }, [type_id]);
 
   return (
     <>
@@ -114,23 +117,25 @@ const Calendar = (props) => {
           alignItems: "center",
         }}
       >
-        <Button
-          style={{
-            borderRadius: "5px 0 0 5px",
-            display: "inline-block",
-          }}
-          onClick={() => setBoardState(true)}
-          className={isBoard ? "selected" : ""}
-        >
-          Board
-        </Button>
-        <Button
-          style={{ borderRadius: " 0 5px 5px 0" }}
-          onClick={() => setCalendarState(true)}
-          className={isBoard ? "" : "selected"}
-        >
-          Calendar
-        </Button>
+        <div style={{ margin: 10 }}>
+          <Button
+            style={{
+              borderRadius: "5px 0 0 5px",
+              display: "inline-block",
+            }}
+            onClick={() => setBoardState(true)}
+            className={isBoard ? "selected" : ""}
+          >
+            Board
+          </Button>
+          <Button
+            style={{ borderRadius: " 0 5px 5px 0" }}
+            onClick={() => setCalendarState(true)}
+            className={isBoard ? "" : "selected"}
+          >
+            Calendar
+          </Button>
+        </div>
       </div>
       {isBoard ? (
         <Board planList={planList} />
