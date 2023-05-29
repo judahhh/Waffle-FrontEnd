@@ -62,7 +62,10 @@ const ModalInviteGroup = (props) => {
 
         handleClose();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        if (err.response.status === 409) alert("이미 초대된 사용자입니다.");
+      });
   };
 
   return (
