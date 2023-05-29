@@ -12,6 +12,7 @@ import { useRoomsStore } from "../../store/Store";
 import { BtnInModal } from "../commons/BtnInModal";
 import { InputTextInModal, InputCheckInModal } from "../commons/InputInModal";
 import { StyleTextArea } from "../../components/profile/MyData";
+import { useNavigate } from "react-router-dom";
 const style = {
   position: "absolute",
   top: "50%",
@@ -48,6 +49,7 @@ const createInput = styled.input`
 `;
 
 const ModalBoardCreate = () => {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -74,24 +76,33 @@ const ModalBoardCreate = () => {
       ? setTypeGroup(group_id)
       : setTypeRoom(room_id);
   }, []);
-  const createBoard = () => {
+  const createBoard = (e) => {
+    e.preventDefault();
+
     let body = {
       title: title,
       content: content,
       date: date,
       notice: noticeOrNot === true ? "0" : "1",
     };
-    api
-      .post(`/note/${type}/${type_id}/create`, body)
-      .then((response) => {
-        console.log(response);
-        response.status === 200
-          ? handleClose()
-          : alert("게시글 생성에 실패하였습니다.");
-
-        // window.location.reload();
-      })
-      .catch((err) => console.log(err));
+    if (title.length === 0) alert("Title은 필수 입력입니다.");
+    else {
+      api
+        .post(`/note/${type}/${type_id}/create`, body)
+        .then((response) => {
+          console.log(response);
+          if (response.status === 200) {
+            handleClose();
+            console.log(type, type_id, response.data);
+            navigate(`/${type}/${type_id}/board/${response.data}`);
+          } else alert("게시글 생성에 실패하였습니다.");
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response.status === 400)
+            alert("관리자만 공지글을 생성할 수 있습니다.");
+        });
+    }
   };
   return (
     <div>
