@@ -98,7 +98,9 @@ const SideBarAtGroup = (props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setTypeGroup(group_id);
+    setTypeGroup(group_id, group_name);
+    setGroupId(group_id, group_name);
+    setStoreGroups(groups);
     //여기서 현재 들어와있는 그룹 name 보여주기(약간 myspace처럼)
     getRooms();
   }, [group_id]);
@@ -134,7 +136,10 @@ const SideBarAtGroup = (props) => {
               navigate("/");
             } else alert("관리자가 아닙니다!");
           })
-          .catch((err) => console.log(err));
+          .catch((err) => {
+            console.log(err);
+            if (err.response.status === 400) alert("관리자가 아닙니다!");
+          });
       } else {
         alert("룸 삭제를 취소하셨습니다.");
       }
@@ -168,6 +173,8 @@ const SideBarAtGroup = (props) => {
   };
   const moveGroupPage = async (group_name, group_id) => {
     setGroupId(group_id, group_name);
+    localStorage.setItem("group_name", group_name);
+    localStorage.setItem("group_id", group_id);
     setHeaderMenu("plan");
     navigate(`/group/${group_id}`, {
       state: { groups: groups, group_name: group_name },
@@ -192,6 +199,7 @@ const SideBarAtGroup = (props) => {
     navigate("/");
     setHeaderMenu("plan");
     setTypeHome();
+    localStorage.setItem("type", "home");
   };
 
   return (
@@ -211,7 +219,7 @@ const SideBarAtGroup = (props) => {
         <MyTitle onClick={moveHome}>waffle</MyTitle>
         <Divider />
         <StyleMySpace onClick={() => setIsOpen(!IsOpen)}>
-          <span>{group_name}</span>
+          <span>{localStorage.getItem("group_name")}</span>
           <span style={{ margin: 10 }}>
             {IsOpen ? (
               <BsChevronUp></BsChevronUp>
@@ -220,20 +228,32 @@ const SideBarAtGroup = (props) => {
             )}
           </span>
         </StyleMySpace>
-
-        <MyList>
-          {groups.map((v, index) => (
-            <MyListItem
-              key={v.group_id}
-              className={group_id == v.group_id ? "selected" : ""}
-            >
-              <ListItemButton
-                onClick={() => moveGroupPage(v.group_name, v.group_id)}
-              >
-                <ListItemText primary={v.group_name} />
-              </ListItemButton>
-            </MyListItem>
-          ))}
+        <MyList className={IsOpen ? "show" : "hide"}>
+          {groups.length !== 0
+            ? groups.map((v, index) => (
+                <MyListItem
+                  key={v.group_id}
+                  className={group_id == v.group_id ? "selected" : ""}
+                >
+                  <ListItemButton
+                    onClick={() => moveGroupPage(v.group_name, v.group_id)}
+                  >
+                    <ListItemText primary={v.group_name} />
+                  </ListItemButton>
+                </MyListItem>
+              ))
+            : storeGroups.map((v, index) => (
+                <MyListItem
+                  key={v.group_id}
+                  className={group_id == v.group_id ? "selected" : ""}
+                >
+                  <ListItemButton
+                    onClick={() => moveGroupPage(v.group_name, v.group_id)}
+                  >
+                    <ListItemText primary={v.group_name} />
+                  </ListItemButton>
+                </MyListItem>
+              ))}
         </MyList>
         <Divider />
         <List>
