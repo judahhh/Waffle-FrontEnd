@@ -80,31 +80,26 @@ const SideBarAtHome = (props) => {
   const { setHeaderMenu } = useHeaderMenuStore();
   const [groups, setGroups] = useState([]);
   const [IsOpen, setIsOpen] = useState(false);
-  let 그룹 = [
-    { group_id: 3, group_name: "그룹1" },
-    { group_id: 4, group_name: "그룹2" },
-    { group_id: 5, group_name: "그룹3" },
-  ];
   const navigate = useNavigate();
 
   useEffect(() => {
-    // getGroups();
+    getGroups();
   }, []);
 
   const getGroups = async () => {
-    // const user_email = localStorage.getItem("email");
-    // await api
-    //   .get(`/${user_email}/groups`, {
-    //     headers: {
-    //       access_token: localStorage.getItem("jwt_accessToken"),
-    //     },
-    //   })
-    //   .then((response) => {
-    //     console.log(response);
-    //     setGroups(response.data.groups);
-    //     setStoreGroups(response.data.groups);
-    //   })
-    //   .catch((err) => console.log(err));
+    const user_email = localStorage.getItem("email");
+    await api
+      .get(`/${user_email}/groups`, {
+        headers: {
+          access_token: localStorage.getItem("jwt_accessToken"),
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        setGroups(response.data.groups);
+        setStoreGroups(response.data.groups);
+      })
+      .catch((err) => console.log(err));
   };
   console.log(storeGroups);
 
@@ -138,6 +133,7 @@ const SideBarAtHome = (props) => {
     setTypeGroup(group_id);
     localStorage.setItem("type", "group");
     localStorage.setItem("group_id", group_id);
+    localStorage.setItem("group_name", group_name);
     setGroupId(group_id, group_name);
     setHeaderMenu("plan");
     navigate(`/group/${group_id}`, {
@@ -149,6 +145,7 @@ const SideBarAtHome = (props) => {
     navigate("/");
     setHeaderMenu("plan");
     setTypeHome();
+    localStorage.setItem("type", "home");
   };
 
   return (
@@ -178,7 +175,7 @@ const SideBarAtHome = (props) => {
           </span>
         </StyleMySpace>
         <MyList className={IsOpen ? "show" : "hide"}>
-          {그룹.map((v, index) => (
+          {groups.map((v, index) => (
             <ListItem
               key={v.group_id}
               onClick={() => {
@@ -191,7 +188,7 @@ const SideBarAtHome = (props) => {
             </ListItem>
           ))}
         </MyList>
-        <ModalCreate />
+        <ModalCreate groups={groups} />
         <BtnWrapper>
           <LogoutBtn onClick={Logout}>Logout</LogoutBtn>
         </BtnWrapper>
