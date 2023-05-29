@@ -87,7 +87,7 @@ const SidebarAtRoom = (props) => {
   const [IsOpen, setIsOpen] = useState(false);
   const { setTypeGroup, setTypeRoom, setTypeHome } = useTypeStore();
   const { setStoreRooms, setRoomId } = useRoomsStore();
-  const { setStoreGroups, setGroupId } = useGroupsStore();
+  const { storeGroups, setStoreGroups, setGroupId } = useGroupsStore();
   const { setHeaderMenu } = useHeaderMenuStore();
   const { room_id } = useParams();
   const { room_name, rooms, group_id, groups } = props;
@@ -115,7 +115,10 @@ const SidebarAtRoom = (props) => {
             setHeaderMenu("plan");
           } else alert("관리자가 아닙니다!");
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+          if (err.response.status === 400) alert("관리자가 아닙니다!");
+        });
     } else {
       alert("룸 삭제를 취소하셨습니다.");
     }
@@ -148,6 +151,9 @@ const SidebarAtRoom = (props) => {
   };
   const moveGroupPage = async (group_name, group_id) => {
     setGroupId(group_id, group_name);
+    localStorage.setItem("type", "group");
+    localStorage.setItem("group_name", group_name);
+    localStorage.setItem("group_id", group_id);
     setHeaderMenu("plan");
     navigate(`/group/${group_id}`, {
       state: { groups: groups, group_name: group_name },
@@ -155,6 +161,9 @@ const SidebarAtRoom = (props) => {
   };
   const moveRoomPage = async (room_name, room_id) => {
     setRoomId(room_id, room_name);
+    localStorage.setItem("type", "room");
+    localStorage.setItem("room_name", room_name);
+    localStorage.setItem("room_id", room_id);
     setHeaderMenu("plan");
     navigate(`/room/${room_id}`, {
       state: {
@@ -169,6 +178,7 @@ const SidebarAtRoom = (props) => {
     navigate("/");
     setHeaderMenu("plan");
     setTypeHome();
+    localStorage.setItem("type", "home");
   };
   return (
     <div>
@@ -187,7 +197,7 @@ const SidebarAtRoom = (props) => {
         <MyTitle onClick={moveHome}>waffle</MyTitle>
         <Divider />
         <StyleMySpace onClick={() => setIsOpen(!IsOpen)}>
-          <span>{room_name}</span>
+          <span>{localStorage.getItem("group_name")}</span>
           <span style={{ margin: 10 }}>
             {IsOpen ? (
               <BsChevronUp></BsChevronUp>
@@ -197,36 +207,50 @@ const SidebarAtRoom = (props) => {
           </span>
         </StyleMySpace>
 
-        <List>
-          {groups.map((v, index) => (
-            <MyListItem
-              key={v.group_id}
-              className={group_id == v.group_id ? "selected" : ""}
-            >
-              <ListItemButton
-                onClick={() => moveGroupPage(v.group_name, v.group_id)}
-              >
-                <ListItemText primary={v.group_name} />
-              </ListItemButton>
-            </MyListItem>
-          ))}
-        </List>
+        <MyList className={IsOpen ? "show" : "hide"}>
+          {groups.length !== 0
+            ? groups.map((v, index) => (
+                <MyListItem
+                  key={v.group_id}
+                  className={group_id == v.group_id ? "selected" : ""}
+                >
+                  <ListItemButton
+                    onClick={() => moveGroupPage(v.group_name, v.group_id)}
+                  >
+                    <ListItemText primary={v.group_name} />
+                  </ListItemButton>
+                </MyListItem>
+              ))
+            : storeGroups.map((v, index) => (
+                <MyListItem
+                  key={v.group_id}
+                  className={group_id == v.group_id ? "selected" : ""}
+                >
+                  <ListItemButton
+                    onClick={() => moveGroupPage(v.group_name, v.group_id)}
+                  >
+                    <ListItemText primary={v.group_name} />
+                  </ListItemButton>
+                </MyListItem>
+              ))}
+        </MyList>
         <Divider />
 
         <List>
           {/* <div onClick={() => navigate(`/room/${room_id}`)}>{room_name}</div> */}
-          {rooms.map((v, index) => (
-            <MyListItem
-              key={v.room_id}
-              className={room_id == v.room_id ? "selected" : ""}
-            >
-              <ListItemButton
-                onClick={() => moveRoomPage(v.room_name, v.room_id)}
+          {rooms &&
+            rooms.map((v, index) => (
+              <MyListItem
+                key={v.room_id}
+                className={room_id == v.room_id ? "selected" : ""}
               >
-                <ListItemText primary={v.room_name} />
-              </ListItemButton>
-            </MyListItem>
-          ))}
+                <ListItemButton
+                  onClick={() => moveRoomPage(v.room_name, v.room_id)}
+                >
+                  <ListItemText primary={v.room_name} />
+                </ListItemButton>
+              </MyListItem>
+            ))}
         </List>
         <BtnWrapper>
           <ModalInviteRoom room_id={room_id} />
