@@ -83,16 +83,15 @@ const MyData = () => {
   const [profileData, setProfileData] = useState();
   const [name, setName] = useState("");
   const [introduction, setIntroduction] = useState("");
-  const [content, setContent] = useState([
-    { id: "3", title: "와플", detail: "프로젝트 협업 툴 개발 중" },
-  ]);
+  const [content, setContent] = useState([]);
   const [editMode, setEditMode] = useState(false);
-  const [editProjectMode, setEditProjectMode] = useState(false);
+  //const [editProjectMode, setEditProjectMode] = useState(Array(3).fill(false));
   const [title, setTitle] = useState("");
   const [detail, setDetail] = useState("");
+  const [contentLength, setContentLength] = useState();
+  const [editProjectMode, setEditProjectMode] = useState(false);
 
   let formData = new FormData();
-
   //서버로부터 프로필 데이터 get해옴
   const getProfileData = async () => {
     await api
@@ -103,10 +102,12 @@ const MyData = () => {
         setName(response.data.name);
         setIntroduction(response.data.introduction);
         setContent(response.data.content);
+        setContentLength(response.data.content.length);
         setImgFile(response.data.img);
       })
       .catch((err) => console.log(err));
   };
+  console.log(contentLength, editProjectMode);
 
   // const onUploadImageButtonClick = useCallback(() => {
   //   if (!inputRef.current) {
@@ -160,20 +161,24 @@ const MyData = () => {
   };
 
   //진행 중인 프로젝트 수정하는 함수
-  const editProject = async (id) => {
+  const editProject = async (e, id) => {
+    e.preventDefault();
     let body = {
       title: title,
       detail: detail,
     };
-    await api
-      .post(`/profile/${id}/update`, body)
-      .then((response) => {
-        console.log(response);
-        //만약 무한루프 돌면 지우기
-        getProfileData();
-        setEditProjectMode(false);
-      })
-      .catch((err) => console.log(err));
+    if (title.length === 0) alert("Title은 필수 입력입니다.");
+    else {
+      await api
+        .post(`/profile/${id}/update`, body)
+        .then((response) => {
+          console.log(response);
+          //만약 무한루프 돌면 지우기
+          getProfileData();
+          setEditProjectMode(false);
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   //진행 중인 프로젝트 삭제하는 함수
@@ -243,7 +248,12 @@ const MyData = () => {
             cols="45"
             rows="5"
             placeholder={introduction}
-            onChange={(e) => setIntroduction(e.target.value)}
+            value={introduction}
+            onChange={(e) =>
+              e.target.value === ""
+                ? setIntroduction("")
+                : setIntroduction(e.target.value)
+            }
             autoFocus
           ></StyleTextArea>
         </>
@@ -303,7 +313,7 @@ const MyData = () => {
                     <Button onClick={() => setEditProjectMode(false)}>
                       취소
                     </Button>
-                    <Button onClick={() => editProject(v.id)}>저장</Button>
+                    <Button onClick={(e) => editProject(e, v.id)}>저장</Button>
                   </div>
                 </>
               ) : (
