@@ -69,10 +69,11 @@ const ModalOtherProfile = (props) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [otherProfile, setOtherProfile] = useState();
+  const { other } = props;
 
   const getOtherProfile = async () => {
     await api
-      .get(`/profile/other/${props.other.id}`)
+      .get(`/profile/other/${other.id}`)
       .then((response) => {
         console.log(response);
         setOtherProfile(response.data);
@@ -81,12 +82,12 @@ const ModalOtherProfile = (props) => {
   };
   useEffect(() => {
     getOtherProfile();
-  }, []);
+  }, [other]);
 
   return (
     <div>
       <StyleOtherName onClick={handleOpen} style={{ margin: 0 }}>
-        {props.other.name}
+        {props.other.name} &nbsp;
       </StyleOtherName>
 
       <Modal
@@ -110,14 +111,23 @@ const ModalOtherProfile = (props) => {
           {otherProfile && otherProfile.content.length === 0 ? (
             "등록된 프로젝트가 없습니다."
           ) : (
-            <ProjectWrapper>
-              <StyleProjectCard>
-                <h3 style={{ margin: 10 }}>
-                  {otherProfile && otherProfile.content.title}
-                </h3>
-                <p>{otherProfile && otherProfile.content.detail}</p>
-              </StyleProjectCard>
-            </ProjectWrapper>
+            <>
+              <ProjectWrapper
+                style={{ width: 760, height: 190, overflow: "scroll" }}
+              >
+                {otherProfile !== undefined &&
+                  otherProfile.content.map((v, i) => (
+                    <StyleProjectCard>
+                      <h3 style={{ margin: 10 }}>
+                        {/* {otherProfile && otherProfile.content.title} */}
+                        {v.title}
+                      </h3>
+                      {/* <p>{otherProfile && otherProfile.content.detail}</p> */}
+                      <p>{v.detail}</p>
+                    </StyleProjectCard>
+                  ))}
+              </ProjectWrapper>
+            </>
           )}
         </Box>
       </Modal>
