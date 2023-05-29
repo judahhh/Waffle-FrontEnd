@@ -19,22 +19,26 @@ const DmHeaderData = styled.p`
   }
 `;
 const DMChatHeader = styled.div`
-  width: ${(props) => props.resize[0] - 6000}px;
+  position: fixed;
+  // width: ${(props) => props.resize[0] - 5800}px;
+  width: 50%;
   height: ${(props) => props.resize[1] - 700}px;
   height: 50px;
   top: 80px;
   left: 580px;
   background-color: #f5b66c;
   display: flex;
+  justify-content: center;
 `;
 const StyleBox = styled.div`
   position: fixed;
-  width: 500px;
+  /* width: 500px; */
+  width: 50%;
   height: 550px;
-  width: ${(props) => props.resize[0] - 600}px;
-  height: ${(props) => props.resize[1] - 200}px;
+  /* width: ${(props) => props.resize[0] - 600}px; */
+  height: ${(props) => props.resize[1] - 250}px;
   background-color: seashell;
-  top: 80px;
+  top: 130px;
   left: 580px;
   overflow-y: scroll;
 `;
@@ -292,15 +296,22 @@ const InDM = (props) => {
     <StyleDMWrapper resize={resize}>
       <StyleBox resize={resize} ref={messageListRef}>
         <DMChatHeader resize={resize}>
-          <VscTrash onClick={LeaveDM}></VscTrash>
+          <VscTrash
+            onClick={LeaveDM}
+            style={{ fontSize: 30, margin: 10 }}
+          ></VscTrash>
           <ModalDmInvite dm_id={dm_id} dmName={dmName} />
 
-          <h3 style={{ margin: "10px" }}>{dmName}</h3>
-
-          {peopleIncluded.map((v, i) => (
-            <ModalOtherProfile key={v.id} other={v} />
-          ))}
-          <BsCameraVideo onClick={moveToVideoChat}></BsCameraVideo>
+          {/* <h3 style={{ margin: "10px" }}>{dmName}</h3> */}
+          <p style={{ display: "flex" }}>
+            {peopleIncluded.map((v, i) => (
+              <ModalOtherProfile key={v.id} other={v} />
+            ))}
+          </p>
+          <BsCameraVideo
+            onClick={moveToVideoChat}
+            style={{ fontSize: 30, margin: 10 }}
+          ></BsCameraVideo>
           {/* <ButtonInDM onClick={moveToVideoChat2}>2</ButtonInDM> */}
         </DMChatHeader>
 
