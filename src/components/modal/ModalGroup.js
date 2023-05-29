@@ -51,6 +51,7 @@ const ModalGroup = (props) => {
   const handleClose = () => setOpen(false);
   const [group_name, setGroup_name] = useState("");
   const email = localStorage.getItem("email");
+  const groups = props.groups;
 
   const createGroupRoom = async (e) => {
     e.preventDefault();
@@ -63,8 +64,11 @@ const ModalGroup = (props) => {
       .then((response) => {
         console.log(response);
         let group_id = response.data;
-        navigate(`/group/${group_id}`);
         handleClose();
+        // navigate(`/group/${group_id}`, {
+        //   state: { groups: groups, group_name: group_name },
+        // });
+        navigate("/");
         window.location.reload();
       })
       .catch((err) => console.log(err));
