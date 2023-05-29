@@ -60,7 +60,12 @@ const ModalInviteRoom = (props) => {
           alert(`${inviteEmail} 님을 초대하였습니다.`);
         handleClose();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        if (err.response.status === 409) alert("이미 초대된 사용자입니다.");
+        else if (err.response.status === 400)
+          alert("그룹에 없는 사용자입니다.");
+      });
   };
 
   return (
