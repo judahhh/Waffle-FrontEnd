@@ -49,19 +49,24 @@ const ModalProfileUpdate = () => {
   const [detail, setDetail] = useState("");
 
   //진행 중인 프로젝트 생성하는 함수
-  const profileProjectCreate = async () => {
+  const profileProjectCreate = async (e) => {
+    e.preventDefault();
     let body = {
       title: title,
       detail: detail,
     };
-    await api
-      .post("/profile/content/create", body)
-      .then((response) => {
-        console.log(response);
-        handleClose();
-        navigate("/myprofile");
-      })
-      .catch((err) => console.log(err));
+    if (title.length === 0) alert("Title을 입력해주세요");
+    else {
+      await api
+        .post("/profile/content/create", body)
+        .then((response) => {
+          console.log(response);
+          handleClose();
+          navigate("/myprofile");
+          window.location.reload();
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   return (
