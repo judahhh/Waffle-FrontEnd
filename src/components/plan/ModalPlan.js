@@ -105,19 +105,23 @@ const ModalPlan = (props) => {
       title: title,
       content: content,
       start: `${selectStartYear}-${selectStartMonth}-${selectStartDay}`,
-      end: `${selectEndYear}-${selectEndMonth}-${selectEndDay}T16:00:00`,
+      end: `${selectEndYear}-${selectEndMonth}-${selectEndDay}`,
       state: state,
       //color: "#f5b66c",
     };
     console.log(body);
-    await api
-      .post(`/plan/${type}/${type_id}/create`, body)
-      .then((response) => {
-        console.log(response);
-        handleClose();
-        window.location.reload();
-      })
-      .catch((err) => console.log(err));
+    if (title.length === 0) {
+      alert("일정 제목을 입력해주세요!");
+    } else {
+      await api
+        .post(`/plan/${type}/${type_id}/create`, body)
+        .then((response) => {
+          console.log(response);
+          handleClose();
+          window.location.reload();
+        })
+        .catch((err) => console.log(err));
+    }
   };
   const handleRadioBtn = (e) => {
     setState(e.target.value);
