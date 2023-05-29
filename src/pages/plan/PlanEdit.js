@@ -10,6 +10,7 @@ import SideBarAtRoom from "../../components/sidebar/SidebarAtGroup";
 import Header from "../../components/header/Header";
 import { api } from "../../api/Interceptors";
 import { InputTextInModal } from "../../components/commons/InputInModal";
+import { BtnInModal, ButtonInModal } from "../../components/commons/BtnInModal";
 import {
   StyleLabel,
   StyleRadio,
@@ -88,21 +89,26 @@ const PlanEdit = () => {
       title: newTitle,
       content: newContent,
       start: `${selectStartYear}-${selectStartMonth}-${selectStartDay}`,
-      end: `${selectEndYear}-${selectEndMonth}-${selectEndDay}T16:00:00`,
+      end: `${selectEndYear}-${selectEndMonth}-${selectEndDay}`,
       state: state,
     };
     console.log(body);
-    await api
-      .post(`/plan/${plan_id}/update`, body)
-      .then((response) => {
-        console.log(response);
-        if (type === "home") navigate("/");
-        else
-          navigate(`/${type}/${type_id}`, {
-            state: { group_name: group_name, groups: groups },
-          });
-      })
-      .catch((err) => console.log(err));
+    if (newTitle.length === 0) {
+      alert("일정 제목을 입력해주세요!");
+    } else {
+      await api
+        .post(`/plan/${plan_id}/update`, body)
+        .then((response) => {
+          console.log(response);
+          if (type === "home") navigate("/");
+          else
+            navigate(`/${type}/${type_id}`, {
+              state: { group_name: group_name, groups: groups },
+            });
+        })
+        .catch((err) => console.log(err));
+    }
+
     // //해당 type의 일정 페이지로 이동
   };
   const deletePlan = async () => {
@@ -249,9 +255,14 @@ const PlanEdit = () => {
                 );
               })}
             </StyleLabel>
-
-            <input type="submit" value="EDIT" />
-            <input type="button" value="DELETE" onClick={deletePlan} />
+            <p>
+              <BtnInModal type="submit" value="EDIT" />
+              <ButtonInModal
+                type="button"
+                value="DELETE"
+                onClick={deletePlan}
+              />
+            </p>
           </StyleEditWrapper>
         </Box>
       </Box>

@@ -12,7 +12,9 @@ import { useTypeStore, useHeaderMenuStore } from "../../store/Store";
 const Group = () => {
   const { group_id } = useParams();
   const location = useLocation();
-  const group_name = location.state.group_name;
+  // const { type_name } = useTypeStore();
+  // console.log(type_name);
+  const group_name = localStorage.getItem("group_name");
 
   const groups = location.state.groups;
   const { headerMenu } = useHeaderMenuStore();
