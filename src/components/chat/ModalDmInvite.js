@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import { FcInvite } from "react-icons/fc";
+import { MdPeopleOutline } from "react-icons/md";
 
 import { api } from "../../api/Interceptors";
 import { InputTextInModal } from "../commons/InputInModal";
@@ -49,21 +49,37 @@ const ModalDmInvite = (props) => {
   const [inviteEmail, setInviteEmail] = useState("");
   //   const email = useSelector((state) => state.user.email);
 
-  const InviteFriendToDM = () => {
+  const InviteFriendToDM = (e) => {
+    e.preventDefault();
+
     // let chat_id=dm_id
+    console.log(dmName);
     api
       .post(`/chat/${dm_id}/invite`, { email: inviteEmail })
       .then((response) => {
         console.log(response);
-        handleClose();
-        //navigate("/chat");
+        if (response.status === 200) {
+          setInviteEmail("");
+          handleClose();
+          navigate(`/chat/${dm_id}`, { state: { dmName: dmName } });
+          window.location.reload();
+        }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        if (err.response.status === 400) alert("초대인원 초과입니다.");
+        if (err.response.status === 409) alert("이미 초대된 사용자입니다.");
+        setInviteEmail("");
+        handleClose();
+      });
   };
 
   return (
     <div>
-      <FcInvite onClick={handleOpen}></FcInvite>
+      <MdPeopleOutline
+        onClick={handleOpen}
+        style={{ fontSize: 30, margin: 10 }}
+      ></MdPeopleOutline>
 
       <Modal
         open={open}
