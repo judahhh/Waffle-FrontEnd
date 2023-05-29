@@ -61,7 +61,9 @@ const ModalDmCreate = () => {
   const handleClose = () => setOpen(false);
 
   //채팅방 생성 post함수
-  const createDm = () => {
+  const createDm = (e) => {
+    e.preventDefault();
+
     let emailArray = [];
     if (sendToWho1 !== "") emailArray.push(sendToWho1);
     if (sendToWho2 !== "") emailArray.push(sendToWho2);
@@ -80,13 +82,13 @@ const ModalDmCreate = () => {
           console.log("채팅방 생성!", response);
           // 요 밑에 채팅방 아이디 받으면(dmID) dm방에 id 세팅할 것
           handleClose();
-          navigate("/chat");
-          // navigate(`/chat/${response.body}`, {
-          //   state: {
-          //     dmID: response.body,
-          //     dmName: dmName,
-          //   },
-          // });
+          //navigate("/chat");
+          navigate(`/chat/${response.data}`, {
+            state: {
+              dmID: response.data,
+              dmName: dmName,
+            },
+          });
         })
         .catch((err) => console.log(err));
     }
