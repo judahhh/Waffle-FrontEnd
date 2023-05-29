@@ -7,6 +7,7 @@ import { Toolbar, CssBaseline, AppBar } from "@mui/material";
 import {
   useGroupsStore,
   useHeaderMenuStore,
+  useRoomsStore,
   useTypeStore,
 } from "../../store/Store";
 
@@ -56,21 +57,27 @@ const drawerWidth = 240;
 
 const Header = () => {
   const navigate = useNavigate();
-  const { type, type_id, type_name } = useTypeStore();
+  // const { type, type_name } = useTypeStore();
   // const type_id = useParams();
+  const type = localStorage.getItem("type");
+  const type_id =
+    type == "group"
+      ? localStorage.getItem("group_id")
+      : localStorage.getItem("room_id");
+
   const { setHeaderMenu, headerMenu } = useHeaderMenuStore();
-  const { storeGroups } = useGroupsStore();
-  const { storeRooms } = useGroupsStore();
+  const { storeGroups, group_id, group_name } = useGroupsStore();
+  const { storeRooms, room_id, room_name } = useRoomsStore();
   const moveChat = () => {
     setHeaderMenu("chat");
     navigate("/chat");
   };
   const movetoBoard = () => {
-    console.log(storeGroups);
     setHeaderMenu("board");
-    console.log(headerMenu);
-    navigate(`/${type}/${type_id}/board`, {
-      state: { type_name: type_name, groups: storeGroups, rooms: storeRooms },
+    let id = type === "group" ? group_id : room_id;
+    let name = type === "group" ? group_name : room_name;
+    navigate(`/${type}/${id}/board`, {
+      state: { type_name: name, groups: storeGroups, rooms: storeRooms },
     });
   };
   const moveProfile = () => {
@@ -80,6 +87,12 @@ const Header = () => {
   const movePlan = () => {
     setHeaderMenu("plan");
     navigate(`/`);
+  };
+  const movePlanInGroupRoom = () => {
+    setHeaderMenu("plan");
+    navigate(`/${type}/${type_id}`, {
+      state: { groups: storeGroups },
+    });
   };
   return (
     <div>
@@ -118,7 +131,7 @@ const Header = () => {
             <>
               <HeaderBtn
                 id="일정"
-                onClick={() => navigate(`/${type}/${type_id}`)}
+                onClick={movePlanInGroupRoom}
                 className={headerMenu === "plan" ? "selected" : ""}
               >
                 일정
