@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -24,12 +24,16 @@ export const StyleEditWrapper = styled.form`
 `;
 
 const PlanEdit = () => {
+  const navigate = useNavigate();
+  let isLogined = localStorage.getItem("isLogined");
+  useEffect(() => {
+    if (!isLogined) navigate("/login");
+  }, [isLogined]);
+
   let today = new Date();
   let yearToday = today.getFullYear();
   let monthToday = ("0" + (today.getMonth() + 1)).slice(-2);
   let dayToday = ("0" + today.getDate()).slice(-2);
-
-  const navigate = useNavigate();
   const location = useLocation();
   const groups = location.state.groups;
   const group_name = location.state.group_name;

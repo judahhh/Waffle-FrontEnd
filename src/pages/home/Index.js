@@ -14,12 +14,10 @@ const Index = () => {
   const user_email = localStorage.getItem("email");
   const [planState, setPlanState] = useState("Calendar");
   let my_id = localStorage.getItem("id");
-
+  let isLogined = localStorage.getItem("isLogined");
   useEffect(() => {
-    let isLogined = localStorage.getItem("isLogined");
-    console.log(isLogined);
-    // if (!isLogined) navigate("/login");
-  }, []);
+    if (!isLogined) navigate("/login");
+  }, [isLogined]);
 
   return (
     <Box sx={{ display: "flex" }}>

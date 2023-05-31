@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { Box, Toolbar } from "@mui/material";
 
 import Header from "../../components/header/Header";
@@ -10,6 +10,7 @@ import BoardList from "../../components/board/BoardList";
 import { useTypeStore, useHeaderMenuStore } from "../../store/Store";
 
 const Group = () => {
+  const navigate = useNavigate();
   const { group_id } = useParams();
   const location = useLocation();
   // const { type_name } = useTypeStore();
@@ -23,6 +24,10 @@ const Group = () => {
   useEffect(() => {
     setTypeGroup(group_id);
   }, []);
+  let isLogined = localStorage.getItem("isLogined");
+  useEffect(() => {
+    if (!isLogined) navigate("/login");
+  }, [isLogined]);
 
   return (
     <div>

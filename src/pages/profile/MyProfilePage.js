@@ -1,4 +1,6 @@
 import React from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Box, Toolbar, Grid, Divider } from "@mui/material";
 
@@ -14,6 +16,11 @@ const StyleProfileWrapper = styled.div`
 `;
 
 const MyProfilePage = () => {
+  const navigate = useNavigate();
+  let isLogined = localStorage.getItem("isLogined");
+  useEffect(() => {
+    if (!isLogined) navigate("/login");
+  }, [isLogined]);
   return (
     <div>
       <Box sx={{ display: "flex" }}>

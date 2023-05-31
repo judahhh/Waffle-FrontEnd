@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { Box, Toolbar } from "@mui/material";
 
@@ -9,25 +9,25 @@ import Calendar from "../../components/plan/Calendar";
 import { useTypeStore, useHeaderMenuStore } from "../../store/Store";
 
 const Room = () => {
+  const navigate = useNavigate();
   const { room_id } = useParams();
   const location = useLocation();
   const room_name = location.state.room_name;
-  // const room_name = "룸";
   const rooms = location.state.rooms;
-  // const rooms = [{ room_name: "룸1", room_id: 1 }];
   const group_id = location.state.group_id;
-  // const group_id = 13;
   const groups = location.state.groups;
-  // const groups = [
-  //   { group_name: "그룹1", group_id: 13 },
-  //   { group_name: "그룹2", group_id: 15 },
-  // ];
+
   const { setTypeRoom } = useTypeStore();
   useEffect(() => {
     setTypeRoom(room_id);
     localStorage.setItem("type", "room");
     localStorage.setItem("room_id", room_id);
   }, []);
+
+  let isLogined = localStorage.getItem("isLogined");
+  useEffect(() => {
+    if (!isLogined) navigate("/login");
+  }, [isLogined]);
 
   return (
     <div>
