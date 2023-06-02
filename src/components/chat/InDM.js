@@ -189,7 +189,7 @@ const InDM = (props) => {
   const connect = () => {
     console.log("나 연결한다");
     client.current = new StompJs.Client({
-      brokerURL: `ws://${process.env.REACT_APP_SOCKET_IP}/chat-stomp`,
+      brokerURL: `wss://${process.env.REACT_APP_SOCKET_IP}/chat-stomp`,
       onConnect: () => {
         console.log("연결 성공했다");
         subscribe();
