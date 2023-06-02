@@ -31,6 +31,7 @@ const StyleViewImg = styled.img`
   height: 200px;
   border-radius: 70%;
   overflow: hidden;
+  object-fit: cover;
 `;
 const ButtonInDM = styled.button`
   width: 30px;
