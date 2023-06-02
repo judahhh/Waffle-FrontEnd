@@ -18,6 +18,7 @@ import {
   useHeaderMenuStore,
   useTypeStore,
 } from "../../store/Store";
+import WaffleLogo from "../../assets/Waffle Logo.png";
 
 export const MyTitle = styled.h1`
   /* margin */
@@ -162,7 +163,9 @@ const SideBarAtHome = (props) => {
         variant="permanent"
         anchor="left"
       >
-        <MyTitle onClick={moveHome}>waffle</MyTitle>
+        <MyTitle onClick={moveHome}>
+          <img src={WaffleLogo} alt="Waffle" width={130} />
+        </MyTitle>
         <Divider />
         <StyleMySpace onClick={() => setIsOpen(!IsOpen)}>
           <span>My space</span>

@@ -14,10 +14,6 @@ const Index = () => {
   const user_email = localStorage.getItem("email");
   const [planState, setPlanState] = useState("Calendar");
   let my_id = localStorage.getItem("id");
-  let isLogined = localStorage.getItem("isLogined");
-  useEffect(() => {
-    if (!isLogined) navigate("/login");
-  }, [isLogined]);
 
   return (
     <Box sx={{ display: "flex" }}>

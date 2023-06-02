@@ -20,6 +20,7 @@ import {
   useTypeStore,
 } from "../../store/Store";
 import { StyleMySpace } from "./SidebarAtHome";
+import WaffleLogo from "../../assets/Waffle Logo.png";
 
 export const MyTitle = styled.h1`
   margin: 0;
@@ -216,7 +217,9 @@ const SideBarAtGroup = (props) => {
         variant="permanent"
         anchor="left"
       >
-        <MyTitle onClick={moveHome}>waffle</MyTitle>
+        <MyTitle onClick={moveHome}>
+          <img src={WaffleLogo} alt="Waffle" width={130} />
+        </MyTitle>
         <Divider />
         <StyleMySpace onClick={() => setIsOpen(!IsOpen)}>
           <span>{localStorage.getItem("group_name")}</span>
