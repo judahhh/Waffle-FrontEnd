@@ -1,4 +1,4 @@
-## Waffle_Frontend
+## Waffle_Frontend
 
 프로젝트 수행을 위한 협업 웹서비스(Front-end)
 
