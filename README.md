@@ -7,10 +7,12 @@
 평소에 자주 사용하던 프로젝트 협업 공간을 다른 컨셉으로 다시 개발해보는 성취를 경험하였습니다. <br/>
 
 ## Members
-| ![](https://github.com/HoGyeongC.png?size=120) | ![](https://github.com/Seohyun-0206.png?size=120) | ![](https://github.com/judahhh.png?size=120) | 
-| :-----------------------------------------: | :---------------------------------------------: | :--------------------------------------------:  |     [최호경](https://github.com/HoGyeongC)     |     [전서현](https://github.com/Seohyun-0206)     |     [주다현](https://github.com/judahhh)     |    
 
-
+|     백엔드    |     백엔드     |    프론트엔드    |  
+| :-----------------------------------------: | :----------------------------------------------: | :---------------------------------------------: | 
+| ![](https://github.com/HoGyeongC.png?size=100) | ![](https://github.com/Seohyun-0206.png?size=300) | ![](https://github.com/judahhh.png?size=300) | 
+|  | |  | 
+|     [최호경](https://github.com/HoGyeongC)     |     [전서현](https://github.com/Seohyun-020)     |     [주다현](https://github.com/judahhh)     |  
 
 
 ## Stacks
