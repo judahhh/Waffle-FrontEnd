@@ -30,9 +30,12 @@
 <tr>
  <td align="center">Library</td>
  <td>
-  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=ffffff"/>&nbsp  
-<br>
-<img src="https://img.shields.io/badge/Axios-6028e0?style=for-the-badge&logo=Axios&logoColor=ffffff"/>&nbsp 
+  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=ffffff"/>&nbsp;
+<img src="https://img.shields.io/badge/Axios-6028e0?style=for-the-badge&logo=Axios&logoColor=ffffff"/>&nbsp;
+<img src="https://img.shields.io/badge/Styled-Components-pink?style=for-the-badge&logo=Styled-Components&logoColor=ffffff"/>&nbsp;
+<img src="https://img.shields.io/badge/Stomp-red?style=for-the-badge&logo=Stomp&logoColor=ffffff"/>&nbsp;
+<img src="https://img.shields.io/badge/OpenVidu-black?style=for-the-badge&logo=Open-Vidu&logoColor=ffffff"/>&nbsp;
+
   </td>
 </tr>
 <tr>
