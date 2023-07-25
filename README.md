@@ -7,6 +7,8 @@
 평소에 자주 사용하던 프로젝트 협업 공간을 다른 컨셉으로 다시 개발해보는 성취를 경험하였습니다. <br/>
 
 ## Members
+| ![](https://github.com/HoGyeongC.png?size=120) | ![](https://github.com/Seohyun-0206.png?size=120) | ![](https://github.com/judahhh.png?size=120) | 
+| :-----------------------------------------: | :---------------------------------------------: | :--------------------------------------------:  |     [최호경](https://github.com/HoGyeongC)     |     [전서현](https://github.com/Seohyun-0206)     |     [주다현](https://github.com/judahhh)     |    
 
 
 
