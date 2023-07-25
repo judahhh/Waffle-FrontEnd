@@ -22,7 +22,81 @@
   <img src="https://img.shields.io/badge/Javascript-61DQFB?style=for-the-badge&logo=Javascript&logoColor=white"> 
   <img src="https://img.shields.io/badge/Styled-components-pink?style=for-the-badge&logo=Styled-components&logoColor=white"> 
 </div>
+## 🛠 Stack
 
+<table>
+<tr>
+ <td align="center">Language</td>
+ <td>
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=ffffff"/>
+ </td>
+</tr>
+<tr>
+ <td align="center">Library</td>
+ <td>
+  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=ffffff"/>&nbsp  
+<img src="https://img.shields.io/badge/Storybook-ff4785?style=for-the-badge&logo=Storybook&logoColor=ffffff"/>&nbsp
+<img src="https://img.shields.io/badge/styled components-DB7093?style=for-the-badge&logo=Storybook&logoColor=ffffff"/>&nbsp  
+<br>
+<img src="https://img.shields.io/badge/Axios-6028e0?style=for-the-badge&logo=Axios&logoColor=ffffff"/>&nbsp 
+<img src="https://img.shields.io/badge/Msw-00cc00?style=for-the-badge&logo=Msw&logoColor=ffffff"/>&nbsp
+  </td>
+</tr>
+<tr>
+ <td align="center">State Management</td>
+ <td>
+  <img src="https://img.shields.io/badge/RECOIL-ECD53F?style=for-the-badge&logo=Recoil&logoColor=ffffff"/>&nbsp  
+ </td>
+</tr>
+<tr>
+ <td align="center">Database</td>
+ <td>
+  <img src="https://img.shields.io/badge/indexed DB-03EF62?style=for-the-badge&logo=Recoil&logoColor=ffffff"/>&nbsp  
+ </td>
+</tr>
+<tr>
+ <td align="center">Package</td>
+ <td>
+    <img src="https://img.shields.io/badge/NPM-CB3837?style=for-the-badge&logo=Npm&logoColor=white"/>&nbsp 
+  </td>
+</tr>
+<tr>
+ <td align="center">Bundler</td>
+ <td>
+    <img src="https://img.shields.io/badge/vite-646CFF?style=for-the-badge&logo=Vite&logoColor=white"/>&nbsp 
+  </td>
+</tr>
+<tr>
+ <td align="center">Formatter</td>
+ <td>
+  <img src="https://img.shields.io/badge/Prettier-373338?style=for-the-badge&logo=Prettier&logoColor=ffffff"/>&nbsp 
+  <img src="https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=ESLint&logoColor=ffffff"/>&nbsp 
+ </td>
+</tr>
+<tr>
+ <td align="center">Test</td>
+ <td><img src="https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=Jest&logoColor=white"/>&nbsp
+ <img src="https://img.shields.io/badge/Cypress-17202C?style=for-the-badge&logo=Cypress&logoColor=white"/>&nbsp
+</tr>
+<tr>
+ <td align="center">Tools</td>
+ <td>
+    <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white"/>&nbsp 
+    <img src="https://img.shields.io/badge/Notion-5a5d69?style=for-the-badge&logo=Notion&logoColor=white"/>&nbsp
+    <img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=Jira&logoColor=white"/>&nbsp 
+    <img src="https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=Slack&logoColor=white"/>&nbsp 
+    <img src="https://img.shields.io/badge/Figma-d90f42?style=for-the-badge&logo=Figma&logoColor=white"/>&nbsp  
+ </td>
+</tr>
+<tr>
+ <td align="center">IDE</td>
+ <td>
+    <img src="https://img.shields.io/badge/VSCode-007ACC?style=for-the-badge&logo=Visual%20Studio%20Code&logoColor=white"/>&nbsp
+</tr>
+</table>
+
+<br>
+<br>
 
 ## 시연영상
 
