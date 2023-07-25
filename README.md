@@ -15,29 +15,22 @@
 |     [최호경](https://github.com/HoGyeongC)     |     [전서현](https://github.com/Seohyun-020)     |     [주다현](https://github.com/judahhh)     |  
 
 
-## 🛠 Stack
+## 🛠 Stacks
 
 <table>
 <tr>
  <td align="center">Language</td>
  <td>
-  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=ffffff"/>
+  <img src="https://img.shields.io/badge/JavaScript-Yellow?style=for-the-badge&logo=JavaScript&logoColor=ffffff"/>
  </td>
 </tr>
 <tr>
  <td align="center">Library</td>
  <td>
   <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=ffffff"/>&nbsp  
-<img src="https://img.shields.io/badge/styled components-DB7093?style=for-the-badge&logo=Storybook&logoColor=ffffff"/>&nbsp  
 <br>
 <img src="https://img.shields.io/badge/Axios-6028e0?style=for-the-badge&logo=Axios&logoColor=ffffff"/>&nbsp 
   </td>
-</tr>
-<tr>
- <td align="center">State Management</td>
- <td>
-  <img src="https://img.shields.io/badge/RECOIL-ECD53F?style=for-the-badge&logo=Recoil&logoColor=ffffff"/>&nbsp  
- </td>
 </tr>
 <tr>
  <td align="center">Package</td>
