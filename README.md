@@ -28,7 +28,7 @@
 | :-----------------------------------------: | :----------------------------------------------: | :---------------------------------------------: | 
 | ![](https://github.com/HoGyeongC.png?size=100) | ![](https://github.com/Seohyun-0206.png?size=300) | ![](https://github.com/judahhh.png?size=300) | 
 |  | |  | 
-|     [최호경](https://github.com/HoGyeongC)     |     [전서현](https://github.com/Seohyun-020)     |     [주다현](https://github.com/judahhh)     |  
+|     [최호경](https://github.com/HoGyeongC)     |     [전서현](https://github.com/Seohyun-0206)     |     [주다현](https://github.com/judahhh)     |  
 <br>
 <br>
 
