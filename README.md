@@ -18,7 +18,7 @@
 <br>
 <br>
 
-## 🛠 Stacks
+## 🛠 FrontEnd Stacks
 
 <table>
 <tr>
