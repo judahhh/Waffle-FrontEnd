@@ -92,45 +92,9 @@ https://www.youtube.com/watch?v=53iTT8urirE&t=5s
 </table>
 <br>
 
-### Stacks
-- Backend
-Intellij
-java 17
-Springboot 3.0.4
-Springboot-jpa
-Spring Security
-MySQL
-Redis
-websocket
-STOMP
-- Frontend
-VSCode
-JavaScript
-React
-Axios
-Style Components
-STOMP
-NPM
-- WebRTC
-openvidu 2.27.0
-openvidu browser 2.27.0
-- 협업 툴
-Figma(디자인)
-Notion
-Git & Github
-- 배포
-AWS EC2, RDS
-Docker
-Nginx
-
-### 서비스 아키텍처
-- AWS EC2를 이용하여 서버 구축
-- React는 80번 포트로 들어오는 입력을 받을 수 있도록 Nginx 프록시 설정을 하여 docker 이미지화
-- EC2 인스턴스에 docker 이미지로 된 React와 Spring boot jar 파일을 올리고 Redis도 docker 이미지를 다운 받아 설정, openvidu는 on-premises 버전을 docker에서 다운 받아 설정
-- 데이터베이스는 클라우드 데이터베이스로 RDS를 이용하여 구성
-- 도메인을 구매하여 EC2에도 Nginx 설정을 하여 SSL 인증서를 발급받아 https 통신이 가능하도록 함
-- https://waproject.store (현재 접속 불가)
+### Flow
 ![image](https://github.com/judahhh/Waffle-FrontEnd/assets/96521594/66d9a6de-94d0-4ad5-ad5e-8654847d154a)
+
 ### 기술
 - WebRTC(Openvidu)
 -- 웹 상에서 유연하게 실시간 화상채팅을 가능하게 하는 플랫폼
@@ -145,9 +109,6 @@ Nginx
 
 ### 화면 설계서
 ![image](https://github.com/judahhh/Waffle-FrontEnd/assets/96521594/d6c62293-a9cc-4bee-a199-e2739215359c)
-
-### E-R 다이어그램
-![image](https://github.com/judahhh/Waffle-FrontEnd/assets/96521594/6d187311-4c64-4fd2-8b5f-692f3feda5c7)
 
 ### 최종 테스트 케이스
 ![image](https://github.com/judahhh/Waffle-FrontEnd/assets/96521594/b7f88ec4-5e22-40f6-a7ec-0084b6af8fb3)
